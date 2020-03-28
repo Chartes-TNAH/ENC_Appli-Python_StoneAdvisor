@@ -1,0 +1,28 @@
+{% extends "conteneur.html" %}
+
+{% block titre %}| {{titre}}{%endblock%}
+
+{% block corps %}
+
+<style type="text/css">
+
+    h1 {
+
+    font-size: 25px;
+
+    }
+
+</style>
+
+<h1>{{titre}}</h1>
+    {% if resultats %}
+    <p>{{resultats|length}} résultats correspondent à votre recherche :</p>
+        <ul>
+            {% for site in resultats %}
+                <li><a href="{{url_for('site', Id=site.Id)}}">{{site.Nom}}</a></li>
+            {% endfor %}
+        </ul>
+    {% else %}
+    <p>Aucun résultat ne correspond à votre recherche.</p>
+    {% endif %}
+{% endblock %}

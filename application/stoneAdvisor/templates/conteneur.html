@@ -1,0 +1,111 @@
+<html>
+    <head>
+        <style type="text/css">
+
+            body  {
+                background-color: #f0ebe9;
+                color: #1f1a18;
+                text-align: center;
+                font-family: Trebuchet MS, sans-serif;
+                font-size: 18px;
+                font-weight: 500;
+                font-stretch: ultra-condensed;
+            }
+
+            a:link {
+                color: #0f0500;
+                text-decoration: none;
+            }
+
+            a:visited {
+                color: #61544e;
+                text-decoration: none;
+            }
+
+            a:hover {
+                color: #e84802;
+                text-decoration: none;
+            }
+
+            ul {
+                margin: 0;
+                padding: 0;
+            }
+
+            .nav {
+                background-color: #dbd0cc;
+                border-style: solid;
+                border-width: 3px;
+                border-color: #e6dfdc;
+                border-radius: 10px;
+                padding-top: 15px;
+                margin-left: 15px;
+                margin-right: 15px;
+            }
+
+            .nav-link {
+                display: inline;
+                padding: 20px;
+                font-variant: small-caps;
+                font-weight: 550;
+            }
+
+            form { padding-top: 7px; }
+
+             #mapid { margin-top: 20px; }
+
+             .corps { margin-bottom : 70px; }
+
+             .foot {
+                padding-bottom: 3px;
+                padding-top: 10px;
+                background-color: #e6dfdc;
+                font-size: 12px;
+                color: #000000;
+             }
+
+        </style>
+
+        <!-- carte interactive leaflet -->
+        <!-- fichier css -->
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+   integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+   crossorigin=""/>
+        <!-- fichier javascript -->
+        <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+   integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+   crossorigin=""></script>
+
+        <!-- titre du site web -->
+        <title>Stone Advisor</title>
+    </head>
+    <body>
+        <!-- logo "Stone Advisor -->
+         <img src="{{url_for('static', filename='img/title.png')}}" alt="STONE ADVISOR" width="700"/>
+
+         <!-- barre de navigation incluant les boutons "Accueil", "Sites archéologiques" et une barre de recherche. -->
+         <nav class="nav">
+            <ul>
+                <li class="nav-link"><a href="{{ url_for('accueil') }}">Accueil</a></li>
+                <li class="nav-link"><a href="{{ url_for('notices_sites') }}">Sites archéologiques</a></li>
+                <li class="nav-link"><a href="{{url_for('inscription')}}">Inscription</a></li>
+            </ul>
+             <!-- formulaire de recherche intégrant la route "recherche" et sa méthode -->
+            <form action="{{url_for('recherche')}}" method="GET">
+                <!-- barre de recherche -->
+                <input type="search" name="keyword" placeholder="Recherche rapide" aria-label="Recherche">
+                <!-- bouton "recherche"-->
+                <button type="submit">Rechercher</button>
+            </form>
+        </nav>
+
+        <!-- corps de la page -->
+        <div class="corps">{% block corps%}{%endblock%}</div>
+
+        <!-- footer -->
+        <div class="foot">
+            <p>© Stone Advisor - Rebecca Bristow, Master TNAH, prom. 2020.</p>
+            <a href="http://www.chartes.psl.eu/"><img src="{{url_for('static', filename='img/enc.png')}}" alt="ENC" width="100"/></a>
+        </div>
+    </body>
+</html>
