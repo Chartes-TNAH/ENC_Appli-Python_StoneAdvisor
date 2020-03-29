@@ -88,7 +88,12 @@
             <ul>
                 <li class="nav-link"><a href="{{ url_for('accueil') }}">Accueil</a></li>
                 <li class="nav-link"><a href="{{ url_for('notices_sites') }}">Sites archéologiques</a></li>
+                {% if not current_user.is_authenticated %}
                 <li class="nav-link"><a href="{{url_for('inscription')}}">Inscription</a></li>
+                <li class="nav-link"><a href="{{url_for('connexion')}}">Connexion</a></li>
+                {% else %}
+                <li class="nav-link"><a href="{{url_for('deconnexion')}}">Déconnexion ({{current_user.Nom}})</a></li>
+                {% endif %}
             </ul>
              <!-- formulaire de recherche intégrant la route "recherche" et sa méthode -->
             <form action="{{url_for('recherche')}}" method="GET">

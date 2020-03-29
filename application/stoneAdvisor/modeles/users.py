@@ -1,8 +1,12 @@
 from werkzeug.security import generate_password_hash, check_password_hash
-from .. app import db
+# en ajoutant UserMixin à db.Model, on indique à python que User est à la fois un UserMixin et un db.Model
+# un mixin implémente des propriétés et méthodes que pourra hériter la classe utilisée
+
+from flask_login import UserMixin
+from .. app import db, login
 
 db.metadata.clear()
-class User(db.Model):
+class User(db.Model, UserMixin):
     Id = db.Column(db.Integer, unique=True, nullable=False, primary_key=True, autoincrement=True)
     Nom = db.Column(db.Text, nullable=False)
     Login = db.Column(db.String(45), nullable=False, unique=True)
@@ -63,3 +67,15 @@ class User(db.Model):
             return True, user
         except Exception as erreur:
             return False, [str(erreur)]
+
+    def get_id(self):
+        """ Retourne l'id de l'objet actuellement utilisé
+        :returns: ID de l'utilisateur
+        :rtype: int
+        """
+        return self.Id
+
+    #fonction permettant de récupérer un utilisateur en fonction de son identifiant
+    @login.user_loader
+    def trouver_utilisateur_via_id(id):
+        return User.query.get(int(id))
