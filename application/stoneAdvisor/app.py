@@ -18,6 +18,7 @@ login = LoginManager(app)
 
 # configuration de la base de données
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db_SitesArcheo'
+app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 # configuration du secret
 app.config['SECRET_KEY'] = SECRET_KEY
