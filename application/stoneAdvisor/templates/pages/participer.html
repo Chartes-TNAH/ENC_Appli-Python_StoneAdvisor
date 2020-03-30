@@ -5,31 +5,36 @@
 {% block corps %}
 
 <h1>Participer</h1>
-<p>Ajoutez un site archéologique à l'inventaire</p>
+<p>Ajoutez un site archéologique à notre base de données.</p>
 <form class="form" method="POST" action="{{url_for('participer')}}">
   <div class="form-group row">
-    <label for="register-login" class="col-sm-2 col-form-label">Login</label>
+    <label for="nom-site" class="col-sm-2 col-form-label">Nom</label>
     <div class="col-sm-10">
-      <input type="text" class="form-control" id="register-login" name="login" placeholder="Nom d'utilisateur-ice">
+      <input type="text" class="form-control" id="nom-site" name="nom" placeholder="Nom du site archéologique">
     </div>
   </div>
   <div class="form-group row">
-    <label for="register-nom" class="col-sm-2 col-form-label">Nom</label>
+    <label for="adresse-site" class="col-sm-2 col-form-label">Adresse</label>
     <div class="col-sm-10">
-      <input type="text" class="form-control" id="register-nom" placeholder="Votre nom pour les crédits" name="nom">
+      <input type="text" class="form-control" id="adresse-site" placeholder="Adresse" name="adresse">
     </div>
   </div>
   <div class="form-group row">
-    <label for="register-email" class="col-sm-2 col-form-label">Email</label>
+    <label for="latitude-site" class="col-sm-2 col-form-label">Latitude</label>
     <div class="col-sm-10">
-      <input type="email" class="form-control" id="register-email" placeholder="email@example.com" name="email">
+      <input type="text" class="form-control" id="latitude-site" placeholder="Latitude" name="latitude">
     </div>
   </div>
   <div class="form-group row">
-    <label for="register-password" class="col-sm-2 col-form-label">Password</label>
+    <label for="longitude-site" class="col-sm-2 col-form-label">Longitude</label>
     <div class="col-sm-10">
-      <input type="password" class="form-control" id="register-password" placeholder="Mot de passe" name="motdepasse">
+      <input type="text" class="form-control" id="longitude-site" placeholder="Longitude" name="longitude">
     </div>
+    <div class="form-group row">
+        <label for="description-site" class="col-sm-2 col-form-label">Description</label>
+        <div class="col-sm-60">
+            <input type="text" class="form-control" id="description-site" placeholder="Description" name="description">
+        </div>
   </div>
   <div>
     <button type="submit" class="btn btn-primary">Ajoutez le site archéologique</button>

@@ -52,7 +52,7 @@ def inscription():
             flash("Enregistrement effectué. Identifiez-vous maintenant", "success")
             return redirect("/")
         else:
-            flash("Les erreurs suivantes ont été rencontrées : " + ",".join(donnees), "error")
+            flash("L'ajout de vos données a échoué pour les raisons suivantes : " + ",".join(donnees), "error")
             return render_template("pages/inscription.html")
     else:
         return render_template("pages/inscription.html")
@@ -61,7 +61,7 @@ def inscription():
 @app.route("/connexion", methods=["POST", "GET"])
 def connexion():
     if current_user.is_authenticated is True:
-        flash("Vous êtes déjà connecté-e", "info")
+        flash("Vous êtes déjà connecté-e.", "info")
         return redirect("/")
     # Si on est en POST, cela veut dire que le formulaire a été envoyé
     if request.method == "POST":
@@ -70,11 +70,10 @@ def connexion():
             motdepasse=request.form.get("motdepasse", None)
         )
         if user:
-            flash("Connexion effectuée", "success")
             login_user(user)
             return redirect("/")
         else:
-            flash("Les identifiants n'ont pas été reconnus", "error")
+            flash("Les identifiants n'ont pas été reconnus.", "error")
 
     return render_template("pages/connexion.html")
 
@@ -87,13 +86,29 @@ from flask_login import logout_user, current_user
 def deconnexion():
     if current_user.is_authenticated is True:
         logout_user()
-    flash("Vous êtes déconnecté-e", "info")
+    flash("Vous êtes déconnecté-e.", "info")
     return redirect("/")
 
 # Formulaire de mise à jour.
-@app.route("/participer")
+@app.route("/participer", methods=["POST", "GET"])
 def participer():
     if current_user.is_authenticated is False:
-        flash("Vous devez vous connecter pour participer à la création de ce site", "info")
-        return redirect("/inscription")
-    return render_template("pages/participer.html")
+        flash("Pour ajouter des sites archéologiques dans la base de données, veuillez vous connecter.", "info")
+        return redirect("/connexion")
+    if request.method == "POST":
+        statut, donnees = Sites.creer(
+            nom=request.form.get("nom", None),
+            adresse=request.form.get("adresse", None),
+            latitude=request.form.get("latitude", None),
+            longitude=request.form.get("longitude", None),
+            description = request.form.get("description", None)
+        )
+
+        if statut is True:
+            flash("Les données ont été ajoutées à notre base, merci pour votre participation !", "success")
+            return redirect("/participer")
+        else:
+            flash("L'ajout de vos données a échoué pour les raisons suivantes : " + ", ".join(donnees), "danger")
+            return render_template("pages/participer.html")
+    else:
+        return render_template("pages/participer.html")

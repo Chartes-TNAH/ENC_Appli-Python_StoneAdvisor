@@ -57,6 +57,11 @@
 
              .corps { margin-bottom : 70px; }
 
+             .flash {
+             color: #d10829;
+             font-style: italic;
+             }
+
              .foot {
                 padding-bottom: 3px;
                 padding-top: 10px;
@@ -107,7 +112,19 @@
         </nav>
 
         <!-- corps de la page -->
-        <div class="corps">{% block corps%}{%endblock%}</div>
+        <div class="corps">
+            <!-- message d'erreur flash -->
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            <div class=flash>
+            {% for message in messages %}
+                <p>{{ message }}</p>
+            {% endfor %}
+            </div>
+            {% endif %}
+            {% endwith %}
+            {% block corps%}{%endblock%}
+        </div>
 
         <!-- footer -->
         <div class="foot">

@@ -11,6 +11,44 @@ class Sites(db.Model):
     Lien = db.Column(db.Text)
     Images = db.relationship('Images', backref='site')
 
+    @staticmethod
+    def creer(nom, adresse, latitude, longitude, description):
+        erreurs = []
+        if not nom:
+            erreurs.append("Insérez un nom de site")
+        if not adresse:
+            erreurs.append("Insérez une adresse")
+        if not latitude:
+            erreurs.append("Insérez une latitude")
+        if not longitude:
+            erreurs.append("Insérez une longitude")
+        if not description:
+            erreurs.append("Insérez une description de quelques lignes")
+
+        # S'il y a au moins une erreur.
+        if len(erreurs) > 0:
+            return False, erreurs
+
+        # S'il n'y a pas d'erreur, on crée le site.
+        site = Sites(
+            Nom=nom,
+            Adresse=adresse,
+            Latitude=latitude,
+            Longitude=longitude,
+            Description=description
+        )
+
+        try:
+            # On l'ajoute au transport vers la base de données.
+            db.session.add(site)
+            # On envoie le paquet.
+            db.session.commit()
+
+            # On renvoie le site.
+            return True, site
+        except Exception as erreur:
+            return False, [str(erreur)]
+
 class Images(db.Model):
     Id = db.Column(db.Integer, unique=True, nullable=False, primary_key=True, autoincrement=True)
     Source = db.Column(db.Text, nullable=False)
