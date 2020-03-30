@@ -48,6 +48,7 @@
                 padding: 20px;
                 font-variant: small-caps;
                 font-weight: 550;
+                font-size: 16px;
             }
 
             form { padding-top: 7px; }
@@ -88,6 +89,7 @@
             <ul>
                 <li class="nav-link"><a href="{{ url_for('accueil') }}">Accueil</a></li>
                 <li class="nav-link"><a href="{{ url_for('notices_sites') }}">Sites archéologiques</a></li>
+                <li class="nav-link"><a href="{{ url_for('participer') }}">Participer</a></li>
                 {% if not current_user.is_authenticated %}
                 <li class="nav-link"><a href="{{url_for('inscription')}}">Inscription</a></li>
                 <li class="nav-link"><a href="{{url_for('connexion')}}">Connexion</a></li>

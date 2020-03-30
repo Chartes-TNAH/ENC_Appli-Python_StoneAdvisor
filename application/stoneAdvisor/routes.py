@@ -89,3 +89,11 @@ def deconnexion():
         logout_user()
     flash("Vous êtes déconnecté-e", "info")
     return redirect("/")
+
+# Formulaire de mise à jour.
+@app.route("/participer")
+def participer():
+    if current_user.is_authenticated is False:
+        flash("Vous devez vous connecter pour participer à la création de ce site", "info")
+        return redirect("/inscription")
+    return render_template("pages/participer.html")
