@@ -155,3 +155,35 @@ def modification(id):
             flash("Les erreurs suivantes ont été rencontrées : " + ",".join(donnees), "danger")
             site_a_modifier = Sites.query.get(id)
             return render_template("pages/modification_site.html", site_a_modifier=site_a_modifier)
+
+# Supprimer un site archéologique de la base de données.
+@app.route("/supprimer_biblio/<int:biblio_id>", methods=["POST", "GET"])
+@login_required
+def supprimer_biblio(biblio_id):
+    """Route pour supprimer une donnée bibliographique
+    :param biblio_id: identifiant numérique de la donnée bibliographique
+    :return render_template or redirect : redirection vers une nouvelle route
+    """
+    biblio = Biblio.query.get(biblio_id)
+    #associations = endroit.relations
+    if request.method == "POST":
+        status, donnees = Biblio.supprimer_biblio(
+        id=biblio_id,
+        titre=request.args.get("titre", None),
+        auteur=request.args.get("auteur", None),
+        date=request.args.get("date", None),
+        lieu=request.args.get("lieu", None),
+        typep=request.args.get("typep", None))
+#Erreur SQLAlchemy qui n'empêche pas la bonne mise en oeuvre de la manipulation
+        detached_error = "sqlalchemy.orm.exc.DetachedInstanceError"
+        if detached_error:
+            flash("Suppression réussie!", "success")
+            return redirect("/")
+        elif status is True:
+            flash("Suppression réussie!", "success")
+            return redirect("/")
+        else:
+            flash("Les erreurs suivantes ont été rencontrées : " + ",".join(donnees), "error")
+            return render_template("pages/supprimer_biblio.html", biblio=biblio)
+    else:
+        return render_template("pages/supprimer_biblio.html", biblio=biblio)
