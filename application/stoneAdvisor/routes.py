@@ -4,19 +4,32 @@ from .modeles.donnees import Sites, Images
 from .modeles.users import User
 from flask_login import login_user, current_user, logout_user
 
+# Sommaire :
+
+# Accueil
+# Index des sites archéologiques enregistrés
+# Page individuelle des sites archéologiques
+# Recherche
+# Inscription
+# Connexion
+# Déconnexion
+# Ajout d'un site archéologique dans la base de données
+# Modification d'un site archéologique de la base de données
+# Suppression d'un site archéologique de la base de données
+
 # Accueil.
 @app.route("/")
 def accueil():
     sites = Sites.query.all()
     return render_template("pages/accueil.html", nom="Stone Advisor")
 
-# Liste des sites archéologiques enregistrés.
+# Index des sites archéologiques enregistrés.
 @app.route("/sites")
 def notices_sites():
     sites = Sites.query.all()
     return render_template("pages/notice_sites.html", nom="Stone Advisor", sites=sites)
 
-# Sites individuels enregistrés.
+# Page individuelle des sites archéologiques.
 @app.route("/sites/<int:Id>")
 def site(Id):
     site = Sites.query.get(Id)
@@ -89,7 +102,7 @@ def deconnexion():
     flash("Vous êtes déconnecté-e.", "info")
     return redirect("/")
 
-# Ajouter un site archéologique dans la base de données.
+# Ajout d'un site archéologique dans la base de données.
 @app.route("/participer", methods=["POST", "GET"])
 def participer():
     if current_user.is_authenticated is False:
@@ -115,7 +128,7 @@ def participer():
     else:
         return render_template("pages/participer.html")
 
-# Modifier un site archéologique de la base de données.
+# Modification d'un site archéologique de la base de données.
 @app.route("/modifier/<int:id>", methods=["POST", "GET"])
 def modification(id):
     # On renvoie sur la page html les éléments de l'objet site correspondant à l'identifiant de la route
