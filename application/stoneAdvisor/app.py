@@ -26,4 +26,4 @@ app.config['SECRET_KEY'] = SECRET_KEY
 # initiation de l'extension
 db = SQLAlchemy(app)
 
-from .routes import accueil, notices_sites, site, recherche, inscription
+from .routes import accueil, index, site, recherche, inscription, connexion, deconnexion, creation, modification, suppression

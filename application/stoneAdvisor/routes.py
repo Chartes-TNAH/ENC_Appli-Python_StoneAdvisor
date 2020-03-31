@@ -25,15 +25,10 @@ def accueil():
 
 # Index des sites archéologiques enregistrés.
 @app.route("/sites")
-def notices_sites():
+def index():
     sites = Sites.query.all()
     return render_template("pages/notice_sites.html", nom="Stone Advisor", sites=sites)
 
-<<<<<<< HEAD
-# Page individuelle des sites archéologiques.
-=======
-# Page individuelle des sites archéologiques enregistrés.
->>>>>>> modifications
 @app.route("/sites/<int:Id>")
 def site(Id):
     site = Sites.query.get(Id)
@@ -108,7 +103,7 @@ def deconnexion():
 
 # Ajout d'un site archéologique dans la base de données.
 @app.route("/participer", methods=["POST", "GET"])
-def participer():
+def creation():
     if current_user.is_authenticated is False:
         flash("Pour ajouter des sites archéologiques dans la base de données, veuillez vous connecter.", "info")
         return redirect("/connexion")
@@ -128,9 +123,9 @@ def participer():
             return redirect("/participer")
         else:
             flash("L'ajout de vos données a échoué pour les raisons suivantes : " + ", ".join(donnees), "danger")
-            return render_template("pages/participer.html")
+            return render_template("pages/creation.html")
     else:
-        return render_template("pages/participer.html")
+        return render_template("pages/creation.html")
 
 # Modification d'un site archéologique de la base de données.
 @app.route("/modifier/<int:id>", methods=["POST", "GET"])
@@ -161,33 +156,37 @@ def modification(id):
             return render_template("pages/modification_site.html", site_a_modifier=site_a_modifier)
 
 # Suppression d'un site archéologique de la base de données.
-@app.route("/supprimer_biblio/<int:biblio_id>", methods=["POST", "GET"])
-@login_required
-def supprimer_biblio(biblio_id):
-    """Route pour supprimer une donnée bibliographique
-    :param biblio_id: identifiant numérique de la donnée bibliographique
+@app.route("/supprimer/<int:id>", methods=["POST", "GET"])
+def suppression(id):
+    """Route pour supprimer un site archéologique
+    :param id: identifiant numérique du site archéologique
     :return render_template or redirect : redirection vers une nouvelle route
     """
-    biblio = Biblio.query.get(biblio_id)
+    site_a_supprimer = Sites.query.get(id)
     #associations = endroit.relations
     if request.method == "POST":
-        status, donnees = Biblio.supprimer_biblio(
-        id=biblio_id,
-        titre=request.args.get("titre", None),
-        auteur=request.args.get("auteur", None),
-        date=request.args.get("date", None),
-        lieu=request.args.get("lieu", None),
-        typep=request.args.get("typep", None))
-#Erreur SQLAlchemy qui n'empêche pas la bonne mise en oeuvre de la manipulation
+        statut, donnees = Sites.supprimer(
+            Id=id,
+            Nom=request.form.get("nom", None),
+            Adresse=request.form.get("adresse", None),
+            Latitude=request.form.get("latitude", None),
+            Longitude=request.form.get("longitude", None),
+            Description=request.form.get("description", None),
+            Periode=request.form.get("periode", None),
+            Lien=request.form.get("lien", None)
+        )
+
+        # erreur SQLAlchemy qui n'empêche pas la bonne mise en oeuvre de la manipulation.
         detached_error = "sqlalchemy.orm.exc.DetachedInstanceError"
         if detached_error:
             flash("Suppression réussie!", "success")
             return redirect("/")
-        elif status is True:
+        elif statut is True:
             flash("Suppression réussie!", "success")
-            return redirect("/")
+            return redirect("/index")
         else:
             flash("Les erreurs suivantes ont été rencontrées : " + ",".join(donnees), "error")
-            return render_template("pages/supprimer_biblio.html", biblio=biblio)
+            return render_template("pages/suppression_site.html", site_a_supprimer=site_a_supprimer)
     else:
-        return render_template("pages/supprimer_biblio.html", biblio=biblio)
+        return render_template("pages/suppression_site.html", site_a_supprimer=site_a_supprimer)
+
