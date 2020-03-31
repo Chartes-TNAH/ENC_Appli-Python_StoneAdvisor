@@ -29,7 +29,11 @@ def notices_sites():
     sites = Sites.query.all()
     return render_template("pages/notice_sites.html", nom="Stone Advisor", sites=sites)
 
+<<<<<<< HEAD
 # Page individuelle des sites archéologiques.
+=======
+# Page individuelle des sites archéologiques enregistrés.
+>>>>>>> modifications
 @app.route("/sites/<int:Id>")
 def site(Id):
     site = Sites.query.get(Id)
@@ -156,7 +160,7 @@ def modification(id):
             site_a_modifier = Sites.query.get(id)
             return render_template("pages/modification_site.html", site_a_modifier=site_a_modifier)
 
-# Supprimer un site archéologique de la base de données.
+# Suppression d'un site archéologique de la base de données.
 @app.route("/supprimer_biblio/<int:biblio_id>", methods=["POST", "GET"])
 @login_required
 def supprimer_biblio(biblio_id):
