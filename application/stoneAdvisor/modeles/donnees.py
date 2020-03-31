@@ -108,6 +108,29 @@ class Sites(db.Model):
         except Exception as erreur:
             return False, [str(erreur)]
 
+        @staticmethod
+        def supprimer(id, nom, adresse, latitude, longitude, description, periode, lien, images):
+        # :returns: booleen
+
+            site = Sites.query.get(id)
+                site.Nom = nom
+                site.Adresse = adresse
+                site.Latitude = latitude
+                site.Longitude = longitude
+                site.Description = description
+                site.Periode = periode
+                site.Lien = lien
+                site.Images = images
+
+            try:
+                db.session.delete(site)
+                db.session.commit()
+                return True, site
+
+            except Exception as erreur:
+                return False, [str(erreur)]
+
+
 class Images(db.Model):
     Id = db.Column(db.Integer, unique=True, nullable=False, primary_key=True, autoincrement=True)
     Source = db.Column(db.Text, nullable=False)
