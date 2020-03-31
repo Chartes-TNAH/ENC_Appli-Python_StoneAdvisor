@@ -1,0 +1,62 @@
+{% extends "conteneur.html" %}
+
+{% block titre %}| Modification site{%endblock%}
+
+{% block corps %}
+
+<div class="container mb-5">
+  <div class="col">
+<h1>Modification d'un site archéologique</h1>
+  <p>Modifiez le formulaire et cliquez sur "Modifier" pour mettre à jour la notice</p>
+</div>
+</div>
+
+<form class="container" method="POST" action="{{url_for('modification', id=site_a_modifier.Id)}}">
+
+      <div class="form-group col">
+          <label for="nom" class="col-lg-4 col-form-label">Nom</label>
+          <div class="col">
+            <input type="text" id="nom" name="nom" maxlength="255" value="{{site_a_modifier.Nom }}">
+          </div>
+      </div>
+      <div class="form-group col">
+          <label for="nom" class="col-lg-4 col-form-label">Adresse</label>
+          <div class="col">
+            <input type="text" id="nom" name="adresse" maxlength="255" value="{{site_a_modifier.Adresse }}">
+          </div>
+      </div>
+      <div class="form-group col">
+          <label for="latitude" class="col-lg-4 col-form-label">Latitude</label>
+          <div class="col">
+            <input type="text" id="latitude" name="latitude" maxlength="255" value="{{site_a_modifier.Latitude }}">
+          </div>
+      </div>
+      <div class="form-group col">
+          <label for="longitude" class="col-lg-4 col-form-label">Longitude</label>
+          <div class="col">
+            <input type="text" id="longitude" name="longitude" maxlength="255" value="{{site_a_modifier.Longitude }}">
+          </div>
+      </div>
+      <div class="form-group col">
+          <label for="description" class="col-lg-4 col-form-label">Description</label>
+          <div class="col">
+            <input size="60" type="text" id="description" name="description" maxlength="255" value="{{site_a_modifier.Description }}">
+          </div>
+      </div>
+      <div class="form-group col">
+          <label for="periode" class="col-lg-4 col-form-label">Periode</label>
+          <div class="col">
+            <input type="text" id="periode" name="periode" maxlength="255" value="{{site_a_modifier.Periode }}">
+          </div>
+      </div>
+
+<br/>
+   <!--Bouton modifier -->
+      <div class="form-group row">
+        <button type="submit" class="btn btn-secondary mx-auto" value="créer">Modifier</button>
+      </div>
+
+</form>
+
+{% endblock %}
+

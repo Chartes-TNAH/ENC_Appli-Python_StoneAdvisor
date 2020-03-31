@@ -89,7 +89,7 @@ def deconnexion():
     flash("Vous êtes déconnecté-e.", "info")
     return redirect("/")
 
-# Formulaire de mise à jour.
+# Ajouter un site archéologique dans la base de données.
 @app.route("/participer", methods=["POST", "GET"])
 def participer():
     if current_user.is_authenticated is False:
@@ -101,7 +101,9 @@ def participer():
             adresse=request.form.get("adresse", None),
             latitude=request.form.get("latitude", None),
             longitude=request.form.get("longitude", None),
-            description = request.form.get("description", None)
+            description=request.form.get("description", None),
+            periode=request.form.get("periode", None)
+            #image=request.form.get("image", None)
         )
 
         if statut is True:
@@ -112,3 +114,31 @@ def participer():
             return render_template("pages/participer.html")
     else:
         return render_template("pages/participer.html")
+
+# Modifier un site archéologique de la base de données.
+@app.route("/modifier/<int:id>", methods=["POST", "GET"])
+def modification(id):
+    # On renvoie sur la page html les éléments de l'objet site correspondant à l'identifiant de la route
+    if request.method == "GET":
+        site_a_modifier = Sites.query.get(id)
+        return render_template("pages/modification_site.html", site_a_modifier=site_a_modifier)
+
+    # on récupère les données du formulaire modifié
+    else:
+        statut, donnees= Sites.modifier(
+            Id=id,
+            Nom=request.form.get("nom", None),
+            Adresse=request.form.get("adresse", None),
+            Latitude=request.form.get("latitude", None),
+            Longitude=request.form.get("longitude", None),
+            Description=request.form.get("description", None),
+            Periode=request.form.get("periode", None)
+        )
+
+        if statut is True:
+            flash("Modification réussie !", "success")
+            return render_template ("pages/notice_sites.html")
+        else:
+            flash("Les erreurs suivantes ont été rencontrées : " + ",".join(donnees), "danger")
+            site_a_modifier = Sites.query.get(id)
+            return render_template("pages/modification_site.html", site_a_modifier=site_a_modifier)

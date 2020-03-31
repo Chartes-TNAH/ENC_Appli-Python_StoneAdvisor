@@ -24,6 +24,8 @@ class Sites(db.Model):
             erreurs.append("Insérez une longitude")
         if not description:
             erreurs.append("Insérez une description de quelques lignes")
+        if not periode:
+            erreurs.append("Indiquez une fourchette chronologique")
 
         # S'il y a au moins une erreur.
         if len(erreurs) > 0:
@@ -35,7 +37,9 @@ class Sites(db.Model):
             Adresse=adresse,
             Latitude=latitude,
             Longitude=longitude,
-            Description=description
+            Description=description,
+            Periode=periode,
+            #Images=image
         )
 
         try:
@@ -44,7 +48,62 @@ class Sites(db.Model):
             # On envoie le paquet.
             db.session.commit()
 
-            # On renvoie le site.
+            # On renvoie les informations du site.
+            return True, site
+        except Exception as erreur:
+            return False, [str(erreur)]
+
+    @staticmethod
+    def modifier(id, nom, adresse, latitude, longitude, description, periode):
+        erreurs=[]
+        if not nom:
+            erreurs.append("Insérez un nom de site")
+        if not adresse:
+            erreurs.append("Insérez une adresse")
+        if not latitude:
+            erreurs.append("Insérez une latitude")
+        if not longitude:
+            erreurs.append("Insérez une longitude")
+        if not description:
+            erreurs.append("Insérez une description de quelques lignes")
+        if not periode:
+            erreurs.append("Indiquez la fourchette chronologique du site")
+
+        # S'il y a au moins une erreur.
+        if len(erreurs) > 0:
+            return False, erreurs
+
+        # On récupère un site dans la base.
+        site = Sites.query.get(id)
+
+        # On vérifie que l'utilisateur-ice modifie au moins un champ.
+        if site.Nom == nom \
+                and site.Adresse == adresse \
+                and site.Latitude == latitude \
+                and site.Longitude == longitude \
+                and site.Description == description \
+                and site.Periode == periode :
+            erreurs.append("Aucune modification n'a été réalisée")
+
+        if len(erreurs) > 0:
+            return False, erreurs
+
+        else:
+            # Mise à jour du site
+            site.Nom = nom
+            site.Adresse = adresse
+            site.Latitude = latitude
+            site.Longitude = longitude
+            site.Description = description
+            site.Periode = periode
+
+        try:
+            # On l'ajoute au transport vers la base de données.
+            db.session.add(site)
+            # On envoie le paquet.
+            db.session.commit()
+
+            # On renvoie les informations du site.
             return True, site
         except Exception as erreur:
             return False, [str(erreur)]
