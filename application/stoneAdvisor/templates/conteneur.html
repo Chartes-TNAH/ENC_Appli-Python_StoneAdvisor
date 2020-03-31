@@ -95,8 +95,8 @@
          <nav class="nav">
             <ul>
                 <li class="nav-link"><a href="{{ url_for('accueil') }}">Accueil</a></li>
-                <li class="nav-link"><a href="{{ url_for('notices_sites') }}">Sites archéologiques</a></li>
-                <li class="nav-link"><a href="{{ url_for('participer') }}">Participer</a></li>
+                <li class="nav-link"><a href="{{ url_for('index') }}">Sites archéologiques</a></li>
+                <li class="nav-link"><a href="{{ url_for('creation') }}">Participer</a></li>
                 {% if not current_user.is_authenticated %}
                 <li class="nav-link"><a href="{{url_for('inscription')}}">Inscription</a></li>
                 <li class="nav-link"><a href="{{url_for('connexion')}}">Connexion</a></li>

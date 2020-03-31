@@ -12,7 +12,7 @@ class Sites(db.Model):
     Images = db.relationship('Images', backref='site')
 
     @staticmethod
-    def creer(nom, adresse, latitude, longitude, description):
+    def creer(nom, adresse, latitude, longitude, description, periode):
         erreurs = []
         if not nom:
             erreurs.append("Insérez un nom de site")
@@ -54,8 +54,8 @@ class Sites(db.Model):
             return False, [str(erreur)]
 
     @staticmethod
-    def modifier(id, nom, adresse, latitude, longitude, description, periode):
-        erreurs=[]
+    def modifier(nom, adresse, latitude, longitude, description, periode):
+        erreurs = []
         if not nom:
             erreurs.append("Insérez un nom de site")
         if not adresse:
@@ -82,7 +82,7 @@ class Sites(db.Model):
                 and site.Latitude == latitude \
                 and site.Longitude == longitude \
                 and site.Description == description \
-                and site.Periode == periode :
+                and site.Periode == periode:
             erreurs.append("Aucune modification n'a été réalisée")
 
         if len(erreurs) > 0:
@@ -108,27 +108,29 @@ class Sites(db.Model):
         except Exception as erreur:
             return False, [str(erreur)]
 
-        @staticmethod
-        def supprimer(id, nom, adresse, latitude, longitude, description, periode, lien, images):
+    @staticmethod
+    def supprimer(id, nom, adresse, latitude, longitude, description, periode, lien, images):
         # :returns: booleen
 
-            site = Sites.query.get(id)
-                site.Nom = nom
-                site.Adresse = adresse
-                site.Latitude = latitude
-                site.Longitude = longitude
-                site.Description = description
-                site.Periode = periode
-                site.Lien = lien
-                site.Images = images
+        site = Sites.query.get(id)
 
-            try:
-                db.session.delete(site)
-                db.session.commit()
-                return True, site
+        site.Id = id
+        site.Nom = nom
+        site.Adresse = adresse
+        site.Latitude = latitude
+        site.Longitude = longitude
+        site.Description = description
+        site.Periode = periode
+        site.Lien = lien
+        site.Images = images
 
-            except Exception as erreur:
-                return False, [str(erreur)]
+        try:
+            db.session.delete(site)
+            db.session.commit()
+            return True, site
+
+        except Exception as erreur:
+            return False, [str(erreur)]
 
 
 class Images(db.Model):
