@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="9bbdef5b-65a8-406e-9049-8a72823f6987" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/stoneAdvisor/modeles/donnees.py" beforeDir="false" afterPath="$PROJECT_DIR$/stoneAdvisor/modeles/donnees.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/stoneAdvisor/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/stoneAdvisor/routes.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -74,9 +73,9 @@
       <screen x="67" y="27" width="1299" height="741" />
     </state>
     <state width="498" height="446" key="SwitcherDM/67.27.1299.741@67.27.1299.741" timestamp="1584610679331" />
-    <state x="379" y="89" width="672" height="678" key="search.everywhere.popup" timestamp="1585556989834">
+    <state x="379" y="89" width="672" height="678" key="search.everywhere.popup" timestamp="1585647969805">
       <screen x="67" y="27" width="1299" height="741" />
     </state>
-    <state x="379" y="89" width="672" height="678" key="search.everywhere.popup/67.27.1299.741@67.27.1299.741" timestamp="1585556989834" />
+    <state x="379" y="89" width="672" height="678" key="search.everywhere.popup/67.27.1299.741@67.27.1299.741" timestamp="1585647969805" />
   </component>
 </project>
