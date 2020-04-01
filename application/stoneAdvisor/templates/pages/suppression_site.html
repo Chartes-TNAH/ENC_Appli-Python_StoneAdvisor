@@ -2,22 +2,27 @@
 
 
 {% block corps %}
+
+<style>
+
+    dl { text-align: center; }
+
+</style>
+
 <form class="col-3 mr-2 " method="POST" action="{{url_for('suppression', id=site_a_supprimer.Id)}}">
 <dl>
-
-            <dt>Site archéologique</dt><dd id="site" name="site" value="{{site_a_supprimer.Id}}">{{site_a_supprimer.Nom}}</dd>
+            <dt>Etes-vous sûr-e de vouloir supprimer : </dt>
+            <br/>
+            <dd id="site" name="site" value="{{site_a_supprimer.Id}}">{{site_a_supprimer.Nom}}</dd>
+</dl>
 
 <div class="col-md container mt-3">
       <div class="row">
+          <button type="submit" class="btn btn-success btn-sm">Confirmer</button>
+      </div>
+</div>
 
-        <button type="submit" class="btn btn-success btn-sm">Confirmer</button>
-
-      </form>
-
-
-              		</div>
-        </dl>
-
+</form>
 
     <p><a href="{{url_for('accueil')}}">Retour à l'accueil</a></p>
 
