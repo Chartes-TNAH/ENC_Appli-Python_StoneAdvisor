@@ -4,12 +4,9 @@
     <list default="true" id="9bbdef5b-65a8-406e-9049-8a72823f6987" name="Default Changelist" comment="">
       <change afterPath="$PROJECT_DIR$/stoneAdvisor/templates/pages/suppression_site.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db_SitesArcheo" beforeDir="false" afterPath="$PROJECT_DIR$/db_SitesArcheo" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/stoneAdvisor/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/stoneAdvisor/app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/stoneAdvisor/modeles/donnees.py" beforeDir="false" afterPath="$PROJECT_DIR$/stoneAdvisor/modeles/donnees.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/stoneAdvisor/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/stoneAdvisor/routes.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/stoneAdvisor/templates/conteneur.html" beforeDir="false" afterPath="$PROJECT_DIR$/stoneAdvisor/templates/conteneur.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/stoneAdvisor/templates/pages/participer.html" beforeDir="false" afterPath="$PROJECT_DIR$/stoneAdvisor/templates/pages/creation.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/stoneAdvisor/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/stoneAdvisor/routes/generic.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/stoneAdvisor/templates/pages/sites.html" beforeDir="false" afterPath="$PROJECT_DIR$/stoneAdvisor/templates/pages/sites.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,12 +38,13 @@
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/stoneAdvisor/routes" />
       <recent name="$PROJECT_DIR$/stoneAdvisor/templates/pages" />
       <recent name="$PROJECT_DIR$/stoneAdvisor/modeles" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
     </key>
   </component>
   <component name="SvnConfiguration">
