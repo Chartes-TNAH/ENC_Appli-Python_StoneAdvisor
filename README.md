@@ -8,7 +8,7 @@ Cette application Flask a été créée dans le cadre du Master 2 Technologies n
 
 ## Fonctionnalités de l'application
 
-L'application permet de **consulter les sites archéologiques répertoriés dans la base de données**, mais aussi d'en **ajouter, modifier ou supprimer**. Chaque site est affiché sur une **carte intéractive** codée en javascript.
+L'application permet de **consulter les sites archéologiques répertoriés dans la base de données**, mais aussi d'en **ajouter, modifier ou supprimer**. Chaque site est affiché sur une **carte interactive** codée en javascript.
 
 ## Lancer Stone Advisor
 
