@@ -2,11 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9bbdef5b-65a8-406e-9049-8a72823f6987" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/stoneAdvisor/templates/pages/suppression_site.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/stoneAdvisor/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/stoneAdvisor/app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/stoneAdvisor/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/stoneAdvisor/routes/generic.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/stoneAdvisor/templates/pages/sites.html" beforeDir="false" afterPath="$PROJECT_DIR$/stoneAdvisor/templates/pages/sites.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/stoneAdvisor/templates/error/404.html" beforeDir="false" afterPath="$PROJECT_DIR$/stoneAdvisor/templates/error/404.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/stoneAdvisor/templates/error/500.html" beforeDir="false" afterPath="$PROJECT_DIR$/stoneAdvisor/templates/error/500.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
