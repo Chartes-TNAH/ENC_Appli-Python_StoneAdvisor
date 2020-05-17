@@ -3,7 +3,14 @@
   <component name="ChangeListManager">
     <list default="true" id="f9e9b919-1ae5-4089-a1b3-721eef1d9900" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+<<<<<<< HEAD
       <change beforePath="$PROJECT_DIR$/stoneAdvisor/templates/pages/accueil.html" beforeDir="false" afterPath="$PROJECT_DIR$/stoneAdvisor/templates/pages/accueil.html" afterDir="false" />
+=======
+      <change beforePath="$PROJECT_DIR$/db_SitesArcheo" beforeDir="false" afterPath="$PROJECT_DIR$/db_SitesArcheo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/stoneAdvisor/routes/generic.py" beforeDir="false" afterPath="$PROJECT_DIR$/stoneAdvisor/routes/generic.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/stoneAdvisor/templates/pages/accueil.html" beforeDir="false" afterPath="$PROJECT_DIR$/stoneAdvisor/templates/pages/accueil.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/stoneAdvisor/templates/pages/modification_site.html" beforeDir="false" afterPath="$PROJECT_DIR$/stoneAdvisor/templates/pages/modification_site.html" afterDir="false" />
+>>>>>>> modifications
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
