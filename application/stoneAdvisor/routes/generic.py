@@ -21,7 +21,7 @@ from flask_login import login_user, current_user, logout_user
 @app.route("/")
 def accueil():
     sites = Sites.query.all()
-    return render_template("pages/accueil.html", nom="Stone Advisor")
+    return render_template("pages/accueil.html", nom="Stone Advisor", sites=sites)
 
 # Index des sites archéologiques enregistrés.
 @app.route("/sites")
@@ -138,18 +138,18 @@ def modification(id):
     # on récupère les données du formulaire modifié
     else:
         statut, donnees= Sites.modifier(
-            Id=id,
-            Nom=request.form.get("nom", None),
-            Adresse=request.form.get("adresse", None),
-            Latitude=request.form.get("latitude", None),
-            Longitude=request.form.get("longitude", None),
-            Description=request.form.get("description", None),
-            Periode=request.form.get("periode", None)
+            id=id,
+            nom=request.form.get("nom", None),
+            adresse=request.form.get("adresse", None),
+            latitude=request.form.get("latitude", None),
+            longitude=request.form.get("longitude", None),
+            description=request.form.get("description", None),
+            periode=request.form.get("periode", None)
         )
 
         if statut is True:
             flash("Modification réussie !", "success")
-            return render_template ("pages/notice_sites.html")
+            return render_template("pages/notice_sites.html")
         else:
             flash("Les erreurs suivantes ont été rencontrées : " + ",".join(donnees), "danger")
             site_a_modifier = Sites.query.get(id)
@@ -163,17 +163,9 @@ def suppression(id):
     :return render_template or redirect : redirection vers une nouvelle route
     """
     site_a_supprimer = Sites.query.get(id)
-    #associations = endroit.relations
     if request.method == "POST":
         statut, donnees = Sites.supprimer(
-            Id=id,
-            Nom=request.form.get("nom", None),
-            Adresse=request.form.get("adresse", None),
-            Latitude=request.form.get("latitude", None),
-            Longitude=request.form.get("longitude", None),
-            Description=request.form.get("description", None),
-            Periode=request.form.get("periode", None),
-            Lien=request.form.get("lien", None)
+            id=id
         )
 
         # erreur SQLAlchemy qui n'empêche pas la bonne mise en oeuvre de la manipulation.
