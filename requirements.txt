@@ -24,7 +24,7 @@ mysql-utilities==1.6.4
 numpy==1.13.3
 olefile==0.45.1
 OWSLib==0.16.0
-paramiko==2.0.0
+paramiko==2.0.9
 pexpect==4.2.1
 Pillow==5.1.0
 psycopg2==2.7.4
