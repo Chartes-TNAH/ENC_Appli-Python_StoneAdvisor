@@ -54,7 +54,7 @@ class Sites(db.Model):
             return False, [str(erreur)]
 
     @staticmethod
-    def modifier(nom, adresse, latitude, longitude, description, periode):
+    def modifier(id, nom, adresse, latitude, longitude, description, periode):
         erreurs = []
         if not nom:
             erreurs.append("Insérez un nom de site")
@@ -109,20 +109,12 @@ class Sites(db.Model):
             return False, [str(erreur)]
 
     @staticmethod
-    def supprimer(id, nom, adresse, latitude, longitude, description, periode, lien, images):
+    def supprimer(id):
         # :returns: booleen
 
         site = Sites.query.get(id)
 
         site.Id = id
-        site.Nom = nom
-        site.Adresse = adresse
-        site.Latitude = latitude
-        site.Longitude = longitude
-        site.Description = description
-        site.Periode = periode
-        site.Lien = lien
-        site.Images = images
 
         try:
             db.session.delete(site)
