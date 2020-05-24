@@ -29,6 +29,7 @@ def index():
     sites = Sites.query.all()
     return render_template("pages/notice_sites.html", nom="Stone Advisor", sites=sites)
 
+# Page individuelle des sites archéologiques
 @app.route("/sites/<int:Id>")
 def site(Id):
     site = Sites.query.get(Id)
@@ -128,17 +129,25 @@ def creation():
         return render_template("pages/creation.html")
 
 # Modification d'un site archéologique de la base de données.
-@app.route("/modifier/<int:id>", methods=["POST", "GET"])
-def modification(id):
+@app.route("/modifier/<int:Id>", methods=["POST", "GET"])
+def modification(Id):
+    """Route pour modifier un site archéologique
+        :param id: identifiant numérique du site archéologique
+        :return template notice_sites.html ou modification_site.html
+    """
+
     # On renvoie sur la page html les éléments de l'objet site correspondant à l'identifiant de la route
     if request.method == "GET":
-        site_a_modifier = Sites.query.get(id)
+        site_a_modifier = Sites.query.get(Id)
+        # On récupère les éléments de la notice dont l'Id correspond à l'Id choisi.
         return render_template("pages/modification_site.html", site_a_modifier=site_a_modifier)
 
     # on récupère les données du formulaire modifié
     else:
         statut, donnees= Sites.modifier(
-            id=id,
+            id=Id,
+            # id correspond au paramètre de la fonction "supprimer" du fichier "donnees".
+            # Id correspond à la variable utilisée dans le template html.
             nom=request.form.get("nom", None),
             adresse=request.form.get("adresse", None),
             latitude=request.form.get("latitude", None),
@@ -152,20 +161,22 @@ def modification(id):
             return render_template("pages/notice_sites.html")
         else:
             flash("Les erreurs suivantes ont été rencontrées : " + ",".join(donnees), "danger")
-            site_a_modifier = Sites.query.get(id)
+            site_a_modifier = Sites.query.get(Id)
             return render_template("pages/modification_site.html", site_a_modifier=site_a_modifier)
 
 # Suppression d'un site archéologique de la base de données.
-@app.route("/supprimer/<int:id>", methods=["POST", "GET"])
-def suppression(id):
+@app.route("/supprimer/<int:Id>", methods=["POST", "GET"])
+def suppression(Id):
     """Route pour supprimer un site archéologique
     :param id: identifiant numérique du site archéologique
-    :return render_template or redirect : redirection vers une nouvelle route
+    :return redirection ou template suppression_site.html
     """
-    site_a_supprimer = Sites.query.get(id)
+    site_a_supprimer = Sites.query.get(Id)
     if request.method == "POST":
         statut, donnees = Sites.supprimer(
-            id=id
+            id=Id
+            # id correspond au paramètre de la fonction "supprimer" du fichier "donnees".
+            # Id correspond à la variable utilisée dans le template html.
         )
 
         # erreur SQLAlchemy qui n'empêche pas la bonne mise en oeuvre de la manipulation.
