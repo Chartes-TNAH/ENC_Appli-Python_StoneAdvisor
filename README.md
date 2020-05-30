@@ -1,8 +1,6 @@
 # Stone Advisor
 
-**EN COURS.**
-
-Application cartographiant les sites et musées archéologiques de France. 
+**Application cartographiant les sites et musées archéologiques de France. **
 
 Cette application Flask a été créée dans le cadre du Master 2 Technologies numériques appliquées à l'histoire de l'Ecole nationale des chartes. Elle est a été développée grâce au langage de programmation python3 et s'appuie sur une base de données MySQL.
 
