@@ -13,7 +13,7 @@ class User(db.Model, UserMixin):
     Email = db.Column(db.Text, nullable=False)
     Mdp = db.Column(db.String(64), nullable=False)
 
-# fonction renvoyant les données de l'utilisateur-ice si l'identification fonctionne.
+# si tous les paramètres sont remplis, cette fonction renvoie les données de l'utilisateur-ice si l'identification fonctionne.
     @staticmethod
     def identification(login, motdepasse):
         user = User.query.filter(User.Login == login).first()
@@ -69,10 +69,7 @@ class User(db.Model, UserMixin):
             return False, [str(erreur)]
 
     def get_id(self):
-        """ Retourne l'id de l'objet actuellement utilisé
-        :returns: ID de l'utilisateur
-        :rtype: int
-        """
+        # retourne l'identifiant de l'utilisateur-ice
         return self.Id
 
     #fonction permettant de récupérer un utilisateur en fonction de son identifiant

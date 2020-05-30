@@ -1,12 +1,14 @@
+# import des méthodes nécessaires
 from flask import render_template, url_for, request, flash, redirect
 from stoneAdvisor.app import app, login
+# import des tables de la base de données
 from stoneAdvisor.modeles.donnees import Sites, Images
 from stoneAdvisor.modeles.users import User
 from flask_login import login_user, current_user, logout_user
 
 # Sommaire :
 
-# Accueil
+# Page d'accueil
 # Index des sites archéologiques enregistrés
 # Page individuelle des sites archéologiques
 # Recherche
@@ -17,19 +19,23 @@ from flask_login import login_user, current_user, logout_user
 # Modification d'un site archéologique de la base de données
 # Suppression d'un site archéologique de la base de données
 
-# Accueil.
+# Page d'accueil.
+# Cette fonction récupère toutes les informations de la table Sites et renvoie le template "accueil.html".
 @app.route("/")
 def accueil():
     sites = Sites.query.all()
     return render_template("pages/accueil.html", nom="Stone Advisor", sites=sites)
 
 # Index des sites archéologiques enregistrés.
+# Cette fonction récupère toutes les informations de la table Sites et renvoie le template "notice_sites.html".
 @app.route("/sites")
 def index():
     sites = Sites.query.all()
     return render_template("pages/notice_sites.html", nom="Stone Advisor", sites=sites)
 
-# Page individuelle des sites archéologiques
+# Page individuelle des sites archéologiques.
+# Cette fonction récupère toutes les informations de l'un des enregistrements de la table Sites. 
+# Elle nécessite l'indication de l'identifiant de l'enregistrement (Id). 
 @app.route("/sites/<int:Id>")
 def site(Id):
     site = Sites.query.get(Id)
@@ -39,20 +45,24 @@ def site(Id):
 # Recherche.
 @app.route("/recherche")
 def recherche():
+    # récupère le contenu de la barre de recherche dans le template conteneur.html.
     motclef = request.args.get("keyword", None)
-    #liste vide de résultats
+    # crée une liste vide de résultats.
     resultats = []
-    #titre par défaut de la page
+    # titre par défaut de la page.
     titre = "Recherche"
     if motclef:
+        # recherche le mot demandé ou un mot similaire dans les noms de sites archéologiques. 
         resultats = Sites.query.filter(Sites.Nom.like("%{}%".format(motclef))).all()
+        # renvoie le résultat.
         titre = 'Résultats pour la recherche "' + motclef + '"'
     return render_template("pages/recherche.html", resultats=resultats, titre=titre)
 
 # Inscription.
 @app.route("/inscription", methods=["GET", "POST"])
 def inscription():
-    # Si on est en POST, cela veut dire que le formulaire a été envoyé
+    # si on est en POST, cela veut dire que le formulaire a été envoyé
+    # on récupère donc les informations du formulaire
     if request.method == "POST":
         statut, donnees = User.creer(
             login=request.form.get("login", None),
@@ -76,7 +86,8 @@ def connexion():
     if current_user.is_authenticated is True:
         flash("Vous êtes déjà connecté-e.", "info")
         return redirect("/")
-    # Si on est en POST, cela veut dire que le formulaire a été envoyé
+    # si on est en POST, cela veut dire que le formulaire a été envoyé
+    # on récupère les informations du formulaire
     if request.method == "POST":
         user = User.identification(
             login=request.form.get("login", None),
@@ -92,11 +103,10 @@ def connexion():
 
 login.login_view = 'connexion'
 
-from flask_login import logout_user, current_user
-
 # Déconnexion.
 @app.route("/deconnexion", methods=["POST", "GET"])
 def deconnexion():
+    # si l'utilisateur-ice est connecté-e, on la déconnecte.
     if current_user.is_authenticated is True:
         logout_user()
     flash("Vous êtes déconnecté-e.", "info")
@@ -105,10 +115,13 @@ def deconnexion():
 # Ajout d'un site archéologique dans la base de données.
 @app.route("/participer", methods=["POST", "GET"])
 def creation():
+    # si l'utilisteur-ice n'est pas connecté-e, on lui demande de se connecter. 
     if current_user.is_authenticated is False:
         flash("Pour ajouter des sites archéologiques dans la base de données, veuillez vous connecter.", "info")
         return redirect("/connexion")
+    # si le formulaire a été rempli, on récupère les informations. 
     if request.method == "POST":
+        # on appelle la staticmethod "creer" du fichier "modeles.donnees.py".
         statut, donnees = Sites.creer(
             nom=request.form.get("nom", None),
             adresse=request.form.get("adresse", None),
@@ -116,13 +129,13 @@ def creation():
             longitude=request.form.get("longitude", None),
             description=request.form.get("description", None),
             periode=request.form.get("periode", None)
-            #image=request.form.get("image", None)
         )
 
         if statut is True:
             flash("Les données ont été ajoutées à notre base, merci pour votre participation !", "success")
             return redirect("/participer")
         else:
+            # on renvoie les erreurs relevées par la staticmethod.
             flash("L'ajout de vos données a échoué pour les raisons suivantes : " + ", ".join(donnees), "danger")
             return render_template("pages/creation.html")
     else:
@@ -131,22 +144,19 @@ def creation():
 # Modification d'un site archéologique de la base de données.
 @app.route("/modifier/<int:Id>", methods=["POST", "GET"])
 def modification(Id):
-    """Route pour modifier un site archéologique
-        :param id: identifiant numérique du site archéologique
-        :return template notice_sites.html ou modification_site.html
-    """
-
-    # On renvoie sur la page html les éléments de l'objet site correspondant à l'identifiant de la route
+    # pour modifier un site, il est nécessaire d'indiquer son identifiant (Id) dans l'URL.
+    # on renvoie sur la page html les éléments de l'objet correspondant à l'identifiant.
     if request.method == "GET":
         site_a_modifier = Sites.query.get(Id)
-        # On récupère les éléments de la notice dont l'Id correspond à l'Id choisi.
+        # on renvoie un formulaire
         return render_template("pages/modification_site.html", site_a_modifier=site_a_modifier)
 
-    # on récupère les données du formulaire modifié
+    # on récupère les informations du formulaire rempli
     else:
+	# on appelle la staticmethod "modifier" du fichier "modeles.donnees.py".
         statut, donnees= Sites.modifier(
             id=Id,
-            # id correspond au paramètre de la fonction "supprimer" du fichier "donnees".
+            # id correspond au paramètre de la staticmethod "modifier".
             # Id correspond à la variable utilisée dans le template html.
             nom=request.form.get("nom", None),
             adresse=request.form.get("adresse", None),
@@ -160,6 +170,7 @@ def modification(Id):
             flash("Modification réussie !", "success")
             return render_template("pages/notice_sites.html")
         else:
+            # on renvoie les erreurs relevées par la staticmethod.
             flash("Les erreurs suivantes ont été rencontrées : " + ",".join(donnees), "danger")
             site_a_modifier = Sites.query.get(Id)
             return render_template("pages/modification_site.html", site_a_modifier=site_a_modifier)
@@ -167,16 +178,14 @@ def modification(Id):
 # Suppression d'un site archéologique de la base de données.
 @app.route("/supprimer/<int:Id>", methods=["POST", "GET"])
 def suppression(Id):
-    """Route pour supprimer un site archéologique
-    :param id: identifiant numérique du site archéologique
-    :return redirection ou template suppression_site.html
-    """
+    # pour supprimer un site, il est nécessaire d'indiquer son identifiant (Id) dans l'URL.
     site_a_supprimer = Sites.query.get(Id)
     if request.method == "POST":
+        # on appelle la staticmethod "supprimer" du fichier "modeles.donnees.py".
         statut, donnees = Sites.supprimer(
             id=Id
-            # id correspond au paramètre de la fonction "supprimer" du fichier "donnees".
-            # Id correspond à la variable utilisée dans le template html.
+            # id correspond au paramètre de la staticmethod "supprimer".
+            # Id correspond à la variable utilisée dans le template suppression_site.html.
         )
 
         # erreur SQLAlchemy qui n'empêche pas la bonne mise en oeuvre de la manipulation.
@@ -188,6 +197,7 @@ def suppression(Id):
             flash("Suppression réussie!", "success")
             return redirect("/index")
         else:
+            # on renvoie les erreurs relevées par la staticmethod.
             flash("Les erreurs suivantes ont été rencontrées : " + ",".join(donnees), "error")
             return render_template("pages/suppression_site.html", site_a_supprimer=site_a_supprimer)
     else:

@@ -12,6 +12,7 @@ class Sites(db.Model):
     Images = db.relationship('Images', backref='site')
 
     @staticmethod
+    # si tous les paramètres sont remplis, cette fonction ajoute les données dans la base.
     def creer(nom, adresse, latitude, longitude, description, periode):
         erreurs = []
         if not nom:
@@ -31,7 +32,7 @@ class Sites(db.Model):
         if len(erreurs) > 0:
             return False, erreurs
 
-        # S'il n'y a pas d'erreur, on crée le site.
+        # S'il n'y a pas d'erreur, on crée l'enregistrement dans la base.
         site = Sites(
             Nom=nom,
             Adresse=adresse,
@@ -39,7 +40,6 @@ class Sites(db.Model):
             Longitude=longitude,
             Description=description,
             Periode=periode,
-            #Images=image
         )
 
         try:
@@ -54,6 +54,7 @@ class Sites(db.Model):
             return False, [str(erreur)]
 
     @staticmethod
+    # si tous les paramètres sont remplis, cette fonction ajoute les données dans la base.
     def modifier(id, nom, adresse, latitude, longitude, description, periode):
         erreurs = []
         if not nom:
