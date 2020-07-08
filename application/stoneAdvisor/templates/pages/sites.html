@@ -66,6 +66,7 @@
 
         <!-- nom du site archéologique -->
         <h1>{{site.Nom}}</h1>
+
         <div class="container">
         <!-- description du site archéologique -->
             <div class="presentation">
@@ -81,6 +82,7 @@
                 </dl>
             </div>
 
+
         <!-- images du site archéologique -->
             <div class="images">
                 {% for image in image %}
@@ -93,5 +95,12 @@
                 {% endfor %}
             </div>
         </div>
+
+        {% if not current_user.is_authenticated %}
+            <ul class="nav">
+                <li class="nav-link"><a href="{{url_for('suppression', Id=site.Id)}}">Suppression</a></li>
+                <li class="nav-link"><a href="{{url_for('modification', Id=site.Id)}}">Modification</a></li>
+            </ul>
+        {% endif %}
 
 {% endblock %}

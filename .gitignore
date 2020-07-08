@@ -1,3 +1,6 @@
 application/stoneAdvisor/__pycache__/
-
+Commentaire.md
 venv/
+*.pyc
+env/
+.idea/
