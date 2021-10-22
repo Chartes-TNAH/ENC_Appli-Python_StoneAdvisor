@@ -1,31 +1,19 @@
-# import des méthodes nécessaires
 from flask import render_template, url_for, request, flash, redirect
-from stoneAdvisor.app import app, login
-# import des tables de la base de données
-from stoneAdvisor.modeles.donnees import Sites, Images
+from stoneAdvisor.app import app
+# don't forget to import login from stoneAdvisor.app
+# database files
+""" from stoneAdvisor.modeles.donnees import Sites, Images
 from stoneAdvisor.modeles.users import User
-from flask_login import login_user, current_user, logout_user
+from flask_login import login_user, current_user, logout_user """
 
-# Sommaire :
-
-# Page d'accueil
-# Index des sites archéologiques enregistrés
-# Page individuelle des sites archéologiques
-# Recherche
-# Inscription
-# Connexion
-# Déconnexion
-# Ajout d'un site archéologique dans la base de données
-# Modification d'un site archéologique de la base de données
-# Suppression d'un site archéologique de la base de données
-
-# Page d'accueil.
-# Cette fonction récupère toutes les informations de la table Sites et renvoie le template "accueil.html".
+# Home
 @app.route("/")
-def accueil():
-    sites = Sites.query.all()
-    return render_template("pages/accueil.html", nom="Stone Advisor", sites=sites)
+def home():
+    #sites = Sites.query.all()
+    return render_template("pages/home.html")
+    # Don't forget to add "sites=sites"
 
+""" 
 # Index des sites archéologiques enregistrés.
 # Cette fonction récupère toutes les informations de la table Sites et renvoie le template "notice_sites.html".
 @app.route("/sites")
@@ -203,3 +191,4 @@ def suppression(Id):
     else:
         return render_template("pages/suppression_site.html", site_a_supprimer=site_a_supprimer)
 
+ """

@@ -1,6 +1,7 @@
-{% extends "conteneur.html" %}
+{% extends "container.html" %}
 {% block corps %}
 
+<!-- 
     <style type="text/css">
 
         popup.leaflet-popup-tip {
@@ -11,10 +12,10 @@
 
     </style>
 
-    <!-- carte interactive leaflet -->
+    Leaflet map
     <div id="mapid" style="width: 600px; height: 400px; margin-left: auto; margin-right: auto;">
 
-        <!-- coordonnées de la carte + fond de carte (tileLayer) -->
+        coordonnées de la carte + fond de carte (tileLayer)
         <script type="text/javascript">
         var mymap = L.map('mapid').setView([48.866667, 2.333333], 7);
 
@@ -52,6 +53,6 @@
 
         {% endfor %}
 
-    </div>
+    </div> -->
 
 {% endblock %}

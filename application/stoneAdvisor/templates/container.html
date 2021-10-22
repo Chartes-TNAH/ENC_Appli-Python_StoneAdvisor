@@ -74,64 +74,23 @@
 
         </style>
 
-        <!-- carte interactive leaflet -->
-        <!-- fichier css -->
+        <!-- Leaflet map 
         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
    integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
    crossorigin=""/>
-        <!-- fichier javascript -->
         <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
    integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
-   crossorigin=""></script>
+   crossorigin=""></script> -->
 
-        <!-- titre du site web -->
         <title>Stone Advisor</title>
     </head>
     <body>
-        <!-- logo "Stone Advisor -->
+        <!-- Logo -->
          <img src="{{url_for('static', filename='img/title.png')}}" alt="STONE ADVISOR" width="700"/>
 
-         <!-- barre de navigation incluant les boutons "Accueil", "Sites archéologiques" et une barre de recherche. -->
-         <nav class="nav">
-            <ul>
-                <li class="nav-link"><a href="{{ url_for('accueil') }}">Accueil</a></li>
-                <li class="nav-link"><a href="{{ url_for('index') }}">Sites archéologiques</a></li>
-                <li class="nav-link"><a href="{{ url_for('creation') }}">Participer</a></li>
-                {% if not current_user.is_authenticated %}
-                <li class="nav-link"><a href="{{url_for('inscription')}}">Inscription</a></li>
-                <li class="nav-link"><a href="{{url_for('connexion')}}">Connexion</a></li>
-                {% else %}
-                <li class="nav-link"><a href="{{url_for('deconnexion')}}">Déconnexion ({{current_user.Nom}})</a></li>
-                {% endif %}
-            </ul>
-             <!-- formulaire de recherche intégrant la route "recherche" et sa méthode -->
-            <form action="{{url_for('recherche')}}" method="GET">
-                <!-- barre de recherche -->
-                <input type="search" name="keyword" placeholder="Recherche rapide" aria-label="Recherche">
-                <!-- bouton "recherche"-->
-                <button type="submit">Rechercher</button>
-            </form>
-        </nav>
 
-        <!-- corps de la page -->
-        <div class="corps">
-            <!-- message d'erreur flash -->
-            {% with messages = get_flashed_messages() %}
-            {% if messages %}
-            <div class=flash>
-            {% for message in messages %}
-                <p>{{ message }}</p>
-            {% endfor %}
-            </div>
-            {% endif %}
-            {% endwith %}
-            {% block corps%}{%endblock%}
-        </div>
-
-        <!-- footer -->
         <div class="foot">
-            <p>© Stone Advisor - Rebecca Bristow, Master TNAH, prom. 2020.</p>
-            <a href="http://www.chartes.psl.eu/"><img src="{{url_for('static', filename='img/enc.png')}}" alt="ENC" width="100"/></a>
+            <p>© Stone Advisor - Rebecca Bristow, 2020.</p>
         </div>
     </body>
 </html>
