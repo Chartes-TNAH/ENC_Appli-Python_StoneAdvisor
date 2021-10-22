@@ -10,16 +10,13 @@ statics = os.path.join(current_dir, "static")
 
 app = Flask("Stone Advisor", template_folder=templates, static_folder=statics)
 
-#login = LoginManager(app)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db_SitesArcheo'
+app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
-#app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db_SitesArcheo'
-#app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+db = SQLAlchemy(app)
 
 #app.config['SECRET_KEY'] = SECRET_KEY
 
+#login = LoginManager(app)
 
-#db = SQLAlchemy(app)
-
-from .routes import generic
-
-# Don't forget to import error
+from .routes import generic, error

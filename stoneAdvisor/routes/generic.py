@@ -1,25 +1,24 @@
 from flask import render_template, url_for, request, flash, redirect
 from stoneAdvisor.app import app
 # don't forget to import login from stoneAdvisor.app
-# database files
-""" from stoneAdvisor.modeles.donnees import Sites, Images
-from stoneAdvisor.modeles.users import User
-from flask_login import login_user, current_user, logout_user """
+from stoneAdvisor.modeles.donnees import Sites, Images
+#from stoneAdvisor.modeles.users import User
+#from flask_login import login_user, current_user, logout_user
 
 # Home
 @app.route("/")
 def home():
-    #sites = Sites.query.all()
-    return render_template("pages/home.html")
-    # Don't forget to add "sites=sites"
+    sites = Sites.query.all()
+    return render_template("pages/home.html", sites=sites)
 
-""" 
-# Index des sites archéologiques enregistrés.
-# Cette fonction récupère toutes les informations de la table Sites et renvoie le template "notice_sites.html".
+
+# Index of archaeological sites
 @app.route("/sites")
 def index():
     sites = Sites.query.all()
-    return render_template("pages/notice_sites.html", nom="Stone Advisor", sites=sites)
+    return render_template("pages/site_page.html", nom="Stone Advisor", sites=sites)
+
+"""
 
 # Page individuelle des sites archéologiques.
 # Cette fonction récupère toutes les informations de l'un des enregistrements de la table Sites. 
@@ -156,7 +155,7 @@ def modification(Id):
 
         if statut is True:
             flash("Modification réussie !", "success")
-            return render_template("pages/notice_sites.html")
+            return render_template("pages/site_page.html")
         else:
             # on renvoie les erreurs relevées par la staticmethod.
             flash("Les erreurs suivantes ont été rencontrées : " + ",".join(donnees), "danger")
