@@ -5,3 +5,4 @@ venv/
 env/
 .idea/
 stoneAdvisor/google_api/api_key.yaml
+stoneAdvisor/constantes.py
