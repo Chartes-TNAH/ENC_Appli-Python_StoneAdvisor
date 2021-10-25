@@ -2,7 +2,7 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 import os
 #from .constantes import SECRET_KEY
-#from flask_login import LoginManager
+from flask_login import LoginManager
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
 templates = os.path.join(current_dir, "templates")
@@ -17,6 +17,6 @@ db = SQLAlchemy(app)
 
 #app.config['SECRET_KEY'] = SECRET_KEY
 
-#login = LoginManager(app)
+login = LoginManager(app)
 
 from .routes import generic, error

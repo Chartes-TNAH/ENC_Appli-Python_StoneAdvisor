@@ -1,7 +1,4 @@
 from werkzeug.security import generate_password_hash, check_password_hash
-# en ajoutant UserMixin à db.Model, on indique à python que User est à la fois un UserMixin et un db.Model
-# un mixin implémente des propriétés et méthodes que pourra hériter la classe utilisée
-
 from flask_login import UserMixin
 from .. app import db, login
 
@@ -13,66 +10,57 @@ class User(db.Model, UserMixin):
     Email = db.Column(db.Text, nullable=False)
     Mdp = db.Column(db.String(64), nullable=False)
 
-# si tous les paramètres sont remplis, cette fonction renvoie les données de l'utilisateur-ice si l'identification fonctionne.
     @staticmethod
-    def identification(login, motdepasse):
+    def log_in(login, password):
         user = User.query.filter(User.Login == login).first()
-        if user and check_password_hash(user.Mdp, motdepasse):
+        if user and check_password_hash(user.Mdp, password):
             return user
         return None
 
-# fonction pour créer un compte utilisateur-ice.
-# elle retourne un tuple (booléen, User ou liste) et renvoie une erreur s'il y en a une.
     @staticmethod
-    def creer(login, email, nom, motdepasse):
-        erreurs = []
+    def sign_in(login, email, name, password):
+        errors = []
         if not login:
-            erreurs.append("Insérez un login")
+            errors.append("Login missing")
         if not email:
-            erreurs.append("Insérez une adresse email")
-        if not nom:
-            erreurs.append("Insérez un nom")
-        # le mot de passe doit être supérieur à 6 caractères
-        if not motdepasse :
-            erreurs.append("Insérez un mot de passe contenant au moins 6 caractères")
-        if len(motdepasse) < 6:
-            erreurs.append("Le mot de passe doit contenir au moins 6 caractères")
+            errors.append("Email missing")
+        if not name:
+            errors.append("Name missing")
+        # the password must exceed 6 digits
+        if not password :
+            errors.append("Password missing")
+        if len(password) < 6:
+            errors.append("The password must contain at least 6 digits")
 
-        # On vérifie que l'email ou le login sont uniques
+        # Checking that the account is unique
         uniques = User.query.filter(
             db.or_(User.Email == email, User.Login == login)
         ).count()
         if uniques > 0:
-            erreurs.append("L'email ou le login existent déjà")
+            errors.append("The email or login already exists")
 
-        # S'il y a au moins une erreur
-        if len(erreurs) > 0:
-            return False, erreurs
+        if len(errors) > 0:
+            return False, errors
 
-        # Création d'un-e utilisateur-ice
+        # Adding the user to the database
         user = User(
-            Nom=nom,
+            Nom=name,
             Login=login,
             Email=email,
-            Mdp=generate_password_hash(motdepasse)
+            Mdp=generate_password_hash(password)
         )
 
         try:
-            # On l'ajoute au transport vers la base de données
             db.session.add(user)
-            # On envoie le paquet
             db.session.commit()
-
-            # On renvoie l'utilisateur
             return True, user
-        except Exception as erreur:
-            return False, [str(erreur)]
+        except Exception as e:
+            return False, [str(e)]
 
     def get_id(self):
-        # retourne l'identifiant de l'utilisateur-ice
+        # returns the user's id
         return self.Id
 
-    #fonction permettant de récupérer un utilisateur en fonction de son identifiant
     @login.user_loader
-    def trouver_utilisateur_via_id(id):
+    def find_user_from_id(id):
         return User.query.get(int(id))

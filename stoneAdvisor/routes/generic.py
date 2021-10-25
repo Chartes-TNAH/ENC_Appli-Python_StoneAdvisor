@@ -1,9 +1,8 @@
 from flask import render_template, url_for, request, flash, redirect
-from stoneAdvisor.app import app
-# don't forget to import login from stoneAdvisor.app
+from stoneAdvisor.app import app, login
 from stoneAdvisor.modeles.donnees import Sites, Images
-#from stoneAdvisor.modeles.users import User
-#from flask_login import login_user, current_user, logout_user
+from stoneAdvisor.modeles.users import User
+from flask_login import login_user, current_user, logout_user
 
 # Home
 @app.route("/")
