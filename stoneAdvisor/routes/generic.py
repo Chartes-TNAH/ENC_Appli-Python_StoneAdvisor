@@ -16,34 +16,31 @@ def home():
 @app.route("/sites")
 def index():
     sites = Sites.query.all()
-    return render_template("pages/site_page.html", nom="Stone Advisor", sites=sites)
+    return render_template("pages/index.html", nom="Stone Advisor", sites=sites)
 
-"""
 
-# Page individuelle des sites archéologiques.
-# Cette fonction récupère toutes les informations de l'un des enregistrements de la table Sites. 
-# Elle nécessite l'indication de l'identifiant de l'enregistrement (Id). 
+# Individual site page
+# Needs an ID
 @app.route("/sites/<int:Id>")
 def site(Id):
     site = Sites.query.get(Id)
     image = site.Images
-    return render_template("pages/sites.html", nom="Stone Advisor", site=site, image=image)
+    return render_template("pages/site_page.html", nom="Stone Advisor", site=site, image=image)
 
-# Recherche.
-@app.route("/recherche")
-def recherche():
-    # récupère le contenu de la barre de recherche dans le template conteneur.html.
-    motclef = request.args.get("keyword", None)
-    # crée une liste vide de résultats.
-    resultats = []
-    # titre par défaut de la page.
-    titre = "Recherche"
-    if motclef:
-        # recherche le mot demandé ou un mot similaire dans les noms de sites archéologiques. 
-        resultats = Sites.query.filter(Sites.Nom.like("%{}%".format(motclef))).all()
-        # renvoie le résultat.
-        titre = 'Résultats pour la recherche "' + motclef + '"'
-    return render_template("pages/recherche.html", resultats=resultats, titre=titre)
+# Search bar
+@app.route("/search")
+def search():
+    keyword = request.args.get("keyword", None)
+    results = []
+    title = "Search"
+    if keyword:
+        # Looking for the searched words in the database
+        results = Sites.query.filter(Sites.Nom.like("%{}%".format(keyword))).all()
+        # Results
+        title = 'Results for "' + keyword + '"'
+    return render_template("pages/search.html", results=results, title=title)
+
+"""
 
 # Inscription.
 @app.route("/inscription", methods=["GET", "POST"])
@@ -155,7 +152,7 @@ def modification(Id):
 
         if statut is True:
             flash("Modification réussie !", "success")
-            return render_template("pages/site_page.html")
+            return render_template("pages/index.html")
         else:
             # on renvoie les erreurs relevées par la staticmethod.
             flash("Les erreurs suivantes ont été rencontrées : " + ",".join(donnees), "danger")

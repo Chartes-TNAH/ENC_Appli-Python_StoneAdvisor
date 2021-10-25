@@ -1,0 +1,27 @@
+{% extends "container.html" %}
+{% block body %}
+
+<style type="text/css">
+
+    .notice {
+
+    text-align: left;
+    margin-left: 40px;
+    padding-top: 20px;
+
+    }
+
+    li {
+
+    padding: 5px;
+
+    }
+
+</style>
+
+<ul class="notice">
+    {% for site in sites %}
+        <li><a href="/sites/{{site.Id}}">{{site.Nom}}</a></li>
+    {% endfor %}
+</ul>
+{% endblock %}

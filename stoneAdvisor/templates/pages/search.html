@@ -1,6 +1,6 @@
 {% extends "container.html" %}
 
-{% block titre %}| {{titre}}{%endblock%}
+{% block title %}| {{title}}{%endblock%}
 
 {% block body %}
 
@@ -14,11 +14,11 @@
 
 </style>
 
-<h1>{{titre}}</h1>
-    {% if resultats %}
-    <p>{{resultats|length}} résultats correspondent à votre recherche :</p>
+<h1>{{title}}</h1>
+    {% if results %}
+    <p>{{results|length}} résultats correspondent à votre recherche :</p>
         <ul>
-            {% for site in resultats %}
+            {% for site in results %}
                 <li><a href="{{url_for('site', Id=site.Id)}}">{{site.Nom}}</a></li>
             {% endfor %}
         </ul>
