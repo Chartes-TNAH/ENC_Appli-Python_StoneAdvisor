@@ -95,9 +95,10 @@
         <nav class="nav">
             <ul>
                 <li class="nav-link"><a href="{{ url_for('home') }}">Home</a></li>
-                <li class="nav-link"><a href="{{ url_for('index') }}">Archaeological Sites</a></li>
+                <li class="nav-link"><a href="{{ url_for('index') }}">Site index</a></li>
                 {% if not current_user.is_authenticated %}
                 <li class="nav-link"><a href="{{url_for('sign_in')}}">Sign in</a></li>
+                <li class="nav-link"><a href="{{url_for('log_in')}}">Log in</a></li>
                 {% endif %}
             <ul>
         </nav>

@@ -44,11 +44,11 @@ def search():
 def sign_in():
     # Registration form
     if request.method == "POST":
-        status, data = User.creer(
-            login=request.form.get("login", None),
+        status, data = User.sign_in(
+            login=request.form.get("username", None),
             email=request.form.get("email", None),
-            nom=request.form.get("name", None),
-            motdepasse=request.form.get("password", None)
+            name=request.form.get("name", None),
+            password=request.form.get("password", None)
         )
 
         if status is True:
@@ -60,40 +60,37 @@ def sign_in():
     else:
         return render_template("pages/signin.html")
 
-"""
-
-# Connexion.
-@app.route("/connexion", methods=["POST", "GET"])
-def connexion():
+# Logging in
+@app.route("/login", methods=["POST", "GET"])
+def log_in():
     if current_user.is_authenticated is True:
-        flash("Vous êtes déjà connecté-e.", "info")
+        flash("You are already logged in", "info")
         return redirect("/")
-    # si on est en POST, cela veut dire que le formulaire a été envoyé
-    # on récupère les informations du formulaire
     if request.method == "POST":
-        user = User.identification(
-            login=request.form.get("login", None),
-            motdepasse=request.form.get("motdepasse", None)
+        user = User.log_in(
+            login=request.form.get("username", None),
+            password=request.form.get("password", None)
         )
         if user:
             login_user(user)
             return redirect("/")
         else:
-            flash("Les identifiants n'ont pas été reconnus.", "error")
+            flash("The information wasn't recognised", "error")
 
-    return render_template("pages/connexion.html")
+    return render_template("pages/login.html")
 
-login.login_view = 'connexion'
+login.login_view = 'login'
 
-# Déconnexion.
-@app.route("/deconnexion", methods=["POST", "GET"])
-def deconnexion():
-    # si l'utilisateur-ice est connecté-e, on la déconnecte.
+
+# Logging out
+@app.route("/logout", methods=["POST", "GET"])
+def log_out():
     if current_user.is_authenticated is True:
         logout_user()
-    flash("Vous êtes déconnecté-e.", "info")
+    flash("You are logged out", "info")
     return redirect("/")
 
+"""
 # Ajout d'un site archéologique dans la base de données.
 @app.route("/participer", methods=["POST", "GET"])
 def creation():
