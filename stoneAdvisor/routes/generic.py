@@ -39,29 +39,28 @@ def search():
         title = 'Results for "' + keyword + '"'
     return render_template("pages/search.html", results=results, title=title)
 
-"""
-
-# Inscription.
-@app.route("/inscription", methods=["GET", "POST"])
-def inscription():
-    # si on est en POST, cela veut dire que le formulaire a été envoyé
-    # on récupère donc les informations du formulaire
+# Signing in
+@app.route("/signin", methods=["GET", "POST"])
+def sign_in():
+    # Registration form
     if request.method == "POST":
-        statut, donnees = User.creer(
+        status, data = User.creer(
             login=request.form.get("login", None),
             email=request.form.get("email", None),
-            nom=request.form.get("nom", None),
-            motdepasse=request.form.get("motdepasse", None)
+            nom=request.form.get("name", None),
+            motdepasse=request.form.get("password", None)
         )
 
-        if statut is True:
-            flash("Enregistrement effectué. Identifiez-vous maintenant", "success")
+        if status is True:
+            flash("You are now registered and can log in.", "success")
             return redirect("/")
         else:
-            flash("L'ajout de vos données a échoué pour les raisons suivantes : " + ",".join(donnees), "error")
-            return render_template("pages/inscription.html")
+            flash(" Your registration failed: " + ",".join(data), "error")
+            return render_template("pages/signin.html")
     else:
-        return render_template("pages/inscription.html")
+        return render_template("pages/signin.html")
+
+"""
 
 # Connexion.
 @app.route("/connexion", methods=["POST", "GET"])
