@@ -98,9 +98,16 @@
                 <li class="nav-link"><a href="{{ url_for('index') }}">Archaeological Sites</a></li>
             <ul>
         </nav>
+        <!-- Search bar -->
+        <br>
+        <form action="{{url_for('search')}}" method="GET">
+            <input type="search" name="keyword" placeholder="Keywords" aria-label="Search">
+            <button type="submit">Search</button>
+        </form>
+        <br>
 
         <div class="body">
-            <!-- message d'erreur flash 
+            <!-- flash message --> 
             {% with messages = get_flashed_messages() %}
             {% if messages %}
                 <div class=flash>
@@ -109,11 +116,12 @@
                     {% endfor %}
                 </div>
             {% endif %}
-            {% endwith %} -->
+            {% endwith %} 
             {% block body%}
             {%endblock%}
         </div>
 
+        <br>
         <div class="foot">
             <p>© Stone Advisor - Rebecca Bristow, 2020.</p>
         </div>
