@@ -7,9 +7,11 @@
 <style type="text/css">
 
     h1 {
-
     font-size: 25px;
+    }
 
+    .results {
+        list-style-type: none;
     }
 
 </style>
@@ -19,9 +21,9 @@
     {% if results %}
     <p>{{results|length}} results match your search :</p>
     <br>
-        <ul>
+        <ul class="results">
             {% for site in results %}
-                <li><a href="{{url_for('site', Id=site.Id)}}">{{site.Nom}}</a></li>
+                <li class="results"><a href="{{url_for('site', Id=site.Id)}}">{{site.Nom}}</a></li>
                 <br>
             {% endfor %}
         </ul>
