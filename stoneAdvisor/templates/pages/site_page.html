@@ -62,11 +62,35 @@
         margin: auto;
     }
 
+    ul.edit-delete {
+        text-align: left;
+        padding-left: 2%;
+        padding-bottom: 2%;
+    }
+
+    li.edit-delete {
+        list-style-type: none;
+        text-align: left;
+        font-size: 85%;
+        display: inline-block;
+        padding-inline: 1%;
+    }
+
+    .presentation {
+        padding-bottom: 2%;
+    }
+
 </style>
 
         <!-- nom du site archéologique -->
         <h1>{{site.Nom}}</h1>
-
+        {% if current_user.is_authenticated %}
+        <ul class="edit-delete">
+            <li class="edit-delete"><a href="{{url_for('edit', Id=site.Id)}}">Edit</a></li>
+            <li class="edit-delete"><a href="{{url_for('delete', Id=site.Id)}}">Delete</a></li>
+        </ul>
+        {% endif %}
+   
         <div class="container">
         <!-- description du site archéologique -->
             <div class="presentation">

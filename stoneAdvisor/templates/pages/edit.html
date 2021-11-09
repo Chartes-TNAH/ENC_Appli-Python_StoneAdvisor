@@ -1,0 +1,68 @@
+{% extends "container.html" %}
+
+{% block titre %}| Edit{%endblock%}
+
+{% block body %}
+
+<div class="container mb-5">
+  <div class="col">
+<h1>Edit an archaeological site</h1>
+</div>
+</div>
+
+<form class="container" method="POST" action="{{url_for('edit', Id=site_to_edit.Id)}}">
+
+      <div>
+          <label for="nom" class="col-lg-4 col-form-label">Name</label>
+          <div>
+            <input type="text" id="nom" name="nom" maxlength="255" value="{{site_to_edit.Nom }}">
+          </div>
+      </div>
+      <br/>
+      <div>
+          <label for="nom" class="col-lg-4 col-form-label">Address</label>
+          <div>
+            <input type="text" id="adresse" name="adresse" maxlength="255" value="{{site_to_edit.Adresse }}">
+          </div>
+      </div>
+      <br/>
+      <div>
+          <label for="latitude" class="col-lg-4 col-form-label">Latitude</label>
+          <div>
+            <input type="text" id="latitude" name="latitude" maxlength="255" value="{{site_to_edit.Latitude }}">
+          </div>
+      </div>
+      <br/>
+      <div>
+          <label for="longitude" class="col-lg-4 col-form-label">Longitude</label>
+          <div>
+            <input type="text" id="longitude" name="longitude" maxlength="255" value="{{site_to_edit.Longitude }}">
+          </div>
+      </div>
+      <br/>
+      <div>
+          <label for="description" class="col-lg-4 col-form-label">Description</label>
+          <div>
+            <input class="description" size="60" type="text" id="description" name="description" maxlength="255" value="{{site_to_edit.Description }}">
+          </div>
+      </div>
+      <br/>
+      <!--
+      <div class="form-group col">
+          <label for="periode" class="col-lg-4 col-form-label">Periode</label>
+          <div class="col">
+            <input type="text" id="periode" name="periode" maxlength="255" value="{{site_to_edit.Periode }}">
+          </div>
+      </div>
+      -->
+
+<br/>
+
+      <div class="form-group row">
+        <button type="submit" class="btn btn-secondary mx-auto" value="créer">Edit</button>
+      </div>
+
+</form>
+
+{% endblock %}
+

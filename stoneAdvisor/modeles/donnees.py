@@ -51,18 +51,18 @@ class Sites(db.Model):
             return False, [str(erreur)]
 
     @staticmethod
-    def modifier(id, nom, adresse, latitude, longitude, description):
+    def edit(id, nom, adresse, latitude, longitude, description):
         erreurs = []
         if not nom:
-            erreurs.append("Insérez un nom de site")
+            erreurs.append("insert a name")
         if not adresse:
-            erreurs.append("Insérez une adresse")
+            erreurs.append("insert an address")
         if not latitude:
-            erreurs.append("Insérez une latitude")
+            erreurs.append("insert a latitude")
         if not longitude:
-            erreurs.append("Insérez une longitude")
+            erreurs.append("insert a longitude")
         if not description:
-            erreurs.append("Insérez une description de quelques lignes")
+            erreurs.append("insert a short description")
         #if not periode:
             #erreurs.append("Indiquez la fourchette chronologique du site")
 
@@ -78,9 +78,9 @@ class Sites(db.Model):
                 and site.Adresse == adresse \
                 and site.Latitude == latitude \
                 and site.Longitude == longitude \
-                and site.Description == description \
-                and site.Periode == periode:
-            erreurs.append("Aucune modification n'a été réalisée")
+                and site.Description == description:
+                #and site.Periode == periode:
+            erreurs.append("No edit was submitted")
 
         if len(erreurs) > 0:
             return False, erreurs
@@ -92,7 +92,7 @@ class Sites(db.Model):
             site.Latitude = latitude
             site.Longitude = longitude
             site.Description = description
-            site.Periode = periode
+            #site.Periode = periode
 
         try:
             # On l'ajoute au transport vers la base de données.
@@ -106,8 +106,8 @@ class Sites(db.Model):
             return False, [str(erreur)]
 
     @staticmethod
-    def supprimer(id):
-        # :returns: booleen
+    def delete(id):
+        # returns booleen
 
         site = Sites.query.get(id)
 

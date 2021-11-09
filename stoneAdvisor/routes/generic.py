@@ -113,73 +113,64 @@ def creation():
             return redirect("/index")
         else:
             # displaying the errors
-            flash("Error: " + ", ".join(data), "danger")
+            flash("Error: " + ", ".join(data), "error")
             return render_template("pages/creation.html")
     else:
         return render_template("pages/creation.html")
 
-"""
 
-# Modification d'un site archéologique de la base de données.
-@app.route("/modifier/<int:Id>", methods=["POST", "GET"])
-def modification(Id):
-    # pour modifier un site, il est nécessaire d'indiquer son identifiant (Id) dans l'URL.
-    # on renvoie sur la page html les éléments de l'objet correspondant à l'identifiant.
+# Edit one of the archaeological sites
+@app.route("/edit/<int:Id>", methods=["POST", "GET"])
+def edit(Id):
+    # to edit a website, enter its "id" in the route
+    # This displays the editing form
     if request.method == "GET":
-        site_a_modifier = Sites.query.get(Id)
-        # on renvoie un formulaire
-        return render_template("pages/modification_site.html", site_a_modifier=site_a_modifier)
+        site_to_edit = Sites.query.get(Id)
+        return render_template("pages/edit.html", site_to_edit=site_to_edit)
 
-    # on récupère les informations du formulaire rempli
+    # sending the data inserting in the form to the database
     else:
-	# on appelle la staticmethod "modifier" du fichier "modeles.data.py".
-        status, data= Sites.modifier(
+        status, data= Sites.edit(
             id=Id,
-            # id correspond au paramètre de la staticmethod "modifier".
-            # Id correspond à la variable utilisée dans le template html.
             nom=request.form.get("nom", None),
             adresse=request.form.get("adresse", None),
             latitude=request.form.get("latitude", None),
             longitude=request.form.get("longitude", None),
             description=request.form.get("description", None),
-            periode=request.form.get("periode", None)
+            #periode=request.form.get("periode", None)
         )
 
         if status is True:
-            flash("Modification réussie !", "success")
+            flash("Edit successful !", "success")
             return render_template("pages/index.html")
         else:
-            # on renvoie les erreurs relevées par la staticmethod.
-            flash("Les erreurs suivantes ont été rencontrées : " + ",".join(data), "danger")
+            # Errors
+            flash("Errors: " + ",".join(data), "error")
             site_a_modifier = Sites.query.get(Id)
-            return render_template("pages/modification_site.html", site_a_modifier=site_a_modifier)
+            return render_template("pages/edit.html", site_to_edit=site_to_edit)
 
-# Suppression d'un site archéologique de la base de données.
-@app.route("/supprimer/<int:Id>", methods=["POST", "GET"])
-def suppression(Id):
-    # pour supprimer un site, il est nécessaire d'indiquer son identifiant (Id) dans l'URL.
-    site_a_supprimer = Sites.query.get(Id)
+# Delete an archaeological site
+# to delete a website, enter its "id" in the route
+@app.route("/delete/<int:Id>", methods=["POST", "GET"])
+def delete(Id):
+    site_to_delete = Sites.query.get(Id)
     if request.method == "POST":
-        # on appelle la staticmethod "supprimer" du fichier "modeles.data.py".
-        status, data = Sites.supprimer(
+        status, data = Sites.delete(
             id=Id
-            # id correspond au paramètre de la staticmethod "supprimer".
-            # Id correspond à la variable utilisée dans le template suppression_site.html.
         )
 
-        # erreur SQLAlchemy qui n'empêche pas la bonne mise en oeuvre de la manipulation.
+        # ignore SQLAlchemy error
         detached_error = "sqlalchemy.orm.exc.DetachedInstanceError"
         if detached_error:
-            flash("Suppression réussie!", "success")
+            flash("Delete successful!", "success")
             return redirect("/")
         elif status is True:
-            flash("Suppression réussie!", "success")
+            flash("Delete successful!", "success")
             return redirect("/index")
         else:
-            # on renvoie les erreurs relevées par la staticmethod.
-            flash("Les erreurs suivantes ont été rencontrées : " + ",".join(data), "error")
-            return render_template("pages/suppression_site.html", site_a_supprimer=site_a_supprimer)
+            # errors
+            flash("Errors : " + ",".join(data), "error")
+            return render_template("pages/delete.html", site_to_delete=site_to_delete)
     else:
-        return render_template("pages/suppression_site.html", site_a_supprimer=site_a_supprimer)
+        return render_template("pages/delete.html", site_to_delete=site_to_delete)
 
- """

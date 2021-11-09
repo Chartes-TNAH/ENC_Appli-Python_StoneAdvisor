@@ -1,0 +1,29 @@
+{% extends "container.html" %}
+
+
+{% block body %}
+
+<style>
+
+    dl { text-align: center; }
+
+</style>
+
+<form class="col-3 mr-2 " method="POST" action="{{url_for('delete', Id=site_to_delete.Id)}}">
+<dl>
+            <dt>Are you sure you want to delete: </dt>
+            <br/>
+            <dd id="site" name="site" value="{{site_to_delete.Id}}">{{site_to_delete.Nom}}</dd>
+</dl>
+
+<div class="col-md container mt-3">
+      <div class="row">
+          <button type="submit" class="btn btn-success btn-sm">Confirm</button>
+      </div>
+</div>
+
+</form>
+
+    <p><a href="{{url_for('home')}}">Return home</a></p>
+
+{% endblock %}
