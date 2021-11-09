@@ -10,7 +10,7 @@ statics = os.path.join(current_dir, "static")
 
 app = Flask("Stone Advisor", template_folder=templates, static_folder=statics)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db_SitesArcheo'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///archaeo-sites-database'
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 db = SQLAlchemy(app)
