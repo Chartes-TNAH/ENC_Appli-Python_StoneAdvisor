@@ -12,7 +12,7 @@ def home():
 
 
 # Index of archaeological sites
-@app.route("/sites")
+@app.route("/index")
 def index():
     sites = Sites.query.all()
     return render_template("pages/index.html", nom="Stone Advisor", sites=sites)
@@ -20,7 +20,7 @@ def index():
 
 # Individual site page
 # Needs an ID
-@app.route("/sites/<int:Id>")
+@app.route("/index/<int:Id>")
 def site(Id):
     site = Sites.query.get(Id)
     image = site.Images
@@ -90,35 +90,35 @@ def log_out():
     flash("You are logged out", "info")
     return redirect("/")
 
-"""
-# Ajout d'un site archéologique dans la base de données.
-@app.route("/participer", methods=["POST", "GET"])
+# Adding an archaeological site to the database
+@app.route("/contribute", methods=["POST", "GET"])
 def creation():
-    # si l'utilisteur-ice n'est pas connecté-e, on lui demande de se connecter. 
+    # if the user isn't logged in
     if current_user.is_authenticated is False:
-        flash("Pour ajouter des sites archéologiques dans la base de données, veuillez vous connecter.", "info")
-        return redirect("/connexion")
-    # si le formulaire a été rempli, on récupère les informations. 
+        flash("To contribute, log in or sign in", "info")
+        return redirect("/login")
+    # logging in 
     if request.method == "POST":
-        # on appelle la staticmethod "creer" du fichier "modeles.donnees.py".
-        statut, donnees = Sites.creer(
-            nom=request.form.get("nom", None),
-            adresse=request.form.get("adresse", None),
+        # on appelle la staticmethod "creer" du fichier "modeles.data.py".
+        status, data = Sites.creer(
+            nom=request.form.get("name", None),
+            adresse=request.form.get("address", None),
             latitude=request.form.get("latitude", None),
             longitude=request.form.get("longitude", None),
-            description=request.form.get("description", None),
-            periode=request.form.get("periode", None)
+            description=request.form.get("description", None)
         )
 
-        if statut is True:
-            flash("Les données ont été ajoutées à notre base, merci pour votre participation !", "success")
-            return redirect("/participer")
+        if status is True:
+            flash("Thank you for your contribution!", "success")
+            return redirect("/index")
         else:
-            # on renvoie les erreurs relevées par la staticmethod.
-            flash("L'ajout de vos données a échoué pour les raisons suivantes : " + ", ".join(donnees), "danger")
+            # displaying the errors
+            flash("Error: " + ", ".join(data), "danger")
             return render_template("pages/creation.html")
     else:
         return render_template("pages/creation.html")
+
+"""
 
 # Modification d'un site archéologique de la base de données.
 @app.route("/modifier/<int:Id>", methods=["POST", "GET"])
@@ -132,8 +132,8 @@ def modification(Id):
 
     # on récupère les informations du formulaire rempli
     else:
-	# on appelle la staticmethod "modifier" du fichier "modeles.donnees.py".
-        statut, donnees= Sites.modifier(
+	# on appelle la staticmethod "modifier" du fichier "modeles.data.py".
+        status, data= Sites.modifier(
             id=Id,
             # id correspond au paramètre de la staticmethod "modifier".
             # Id correspond à la variable utilisée dans le template html.
@@ -145,12 +145,12 @@ def modification(Id):
             periode=request.form.get("periode", None)
         )
 
-        if statut is True:
+        if status is True:
             flash("Modification réussie !", "success")
             return render_template("pages/index.html")
         else:
             # on renvoie les erreurs relevées par la staticmethod.
-            flash("Les erreurs suivantes ont été rencontrées : " + ",".join(donnees), "danger")
+            flash("Les erreurs suivantes ont été rencontrées : " + ",".join(data), "danger")
             site_a_modifier = Sites.query.get(Id)
             return render_template("pages/modification_site.html", site_a_modifier=site_a_modifier)
 
@@ -160,8 +160,8 @@ def suppression(Id):
     # pour supprimer un site, il est nécessaire d'indiquer son identifiant (Id) dans l'URL.
     site_a_supprimer = Sites.query.get(Id)
     if request.method == "POST":
-        # on appelle la staticmethod "supprimer" du fichier "modeles.donnees.py".
-        statut, donnees = Sites.supprimer(
+        # on appelle la staticmethod "supprimer" du fichier "modeles.data.py".
+        status, data = Sites.supprimer(
             id=Id
             # id correspond au paramètre de la staticmethod "supprimer".
             # Id correspond à la variable utilisée dans le template suppression_site.html.
@@ -172,12 +172,12 @@ def suppression(Id):
         if detached_error:
             flash("Suppression réussie!", "success")
             return redirect("/")
-        elif statut is True:
+        elif status is True:
             flash("Suppression réussie!", "success")
             return redirect("/index")
         else:
             # on renvoie les erreurs relevées par la staticmethod.
-            flash("Les erreurs suivantes ont été rencontrées : " + ",".join(donnees), "error")
+            flash("Les erreurs suivantes ont été rencontrées : " + ",".join(data), "error")
             return render_template("pages/suppression_site.html", site_a_supprimer=site_a_supprimer)
     else:
         return render_template("pages/suppression_site.html", site_a_supprimer=site_a_supprimer)

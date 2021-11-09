@@ -12,50 +12,46 @@ class Sites(db.Model):
     Images = db.relationship('Images', backref='site')
 
     @staticmethod
-    # si tous les paramètres sont remplis, cette fonction ajoute les données dans la base.
-    def creer(nom, adresse, latitude, longitude, description, periode):
+    def creer(nom, adresse, latitude, longitude, description):
         erreurs = []
         if not nom:
-            erreurs.append("Insérez un nom de site")
+            erreurs.append("insert a name")
         if not adresse:
-            erreurs.append("Insérez une adresse")
+            erreurs.append("insert an address")
         if not latitude:
-            erreurs.append("Insérez une latitude")
+            erreurs.append("insert a latitude")
         if not longitude:
-            erreurs.append("Insérez une longitude")
+            erreurs.append("insert a longitude")
         if not description:
-            erreurs.append("Insérez une description de quelques lignes")
-        if not periode:
-            erreurs.append("Indiquez une fourchette chronologique")
+            erreurs.append("insert a short description")
+        #if not periode:
+            #erreurs.append("insert a chronological period")
 
-        # S'il y a au moins une erreur.
+        # errors
         if len(erreurs) > 0:
             return False, erreurs
 
-        # S'il n'y a pas d'erreur, on crée l'enregistrement dans la base.
+        # if no errors, sending the information to the database
         site = Sites(
             Nom=nom,
             Adresse=adresse,
             Latitude=latitude,
             Longitude=longitude,
-            Description=description,
-            Periode=periode,
+            Description=description
+            #Periode=periode,
         )
 
         try:
-            # On l'ajoute au transport vers la base de données.
             db.session.add(site)
-            # On envoie le paquet.
             db.session.commit()
 
-            # On renvoie les informations du site.
+            # displaying the added information
             return True, site
         except Exception as erreur:
             return False, [str(erreur)]
 
     @staticmethod
-    # si tous les paramètres sont remplis, cette fonction ajoute les données dans la base.
-    def modifier(id, nom, adresse, latitude, longitude, description, periode):
+    def modifier(id, nom, adresse, latitude, longitude, description):
         erreurs = []
         if not nom:
             erreurs.append("Insérez un nom de site")
@@ -67,8 +63,8 @@ class Sites(db.Model):
             erreurs.append("Insérez une longitude")
         if not description:
             erreurs.append("Insérez une description de quelques lignes")
-        if not periode:
-            erreurs.append("Indiquez la fourchette chronologique du site")
+        #if not periode:
+            #erreurs.append("Indiquez la fourchette chronologique du site")
 
         # S'il y a au moins une erreur.
         if len(erreurs) > 0:

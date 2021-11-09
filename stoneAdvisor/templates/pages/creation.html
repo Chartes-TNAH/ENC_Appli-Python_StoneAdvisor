@@ -4,60 +4,68 @@
 
 {% block body %}
 
-<h1>Participer</h1>
-<p>Ajoutez un site archéologique à notre base de données</a>.</p>
+<h1>Contribute</h1>
+<p>Add your favourite archaeological site to the database</a>.</p>
 
-<!-- Formulaire -->
+<!-- Form -->
 <form class="form" method="POST" action="{{url_for('creation')}}">
   <div class="form-group row">
-    <label for="nom-site" class="col-sm-2 col-form-label">Nom*</label>
+    <label for="nom-site" class="col-sm-2 col-form-label">Name*</label>
     <div class="col-sm-10">
-      <input type="text" id="nom-site" name="nom" placeholder="Nom du site archéologique">
+      <input type="text" id="nom-site" name="name" placeholder="Name">
     </div>
   </div>
+  <br/>
   <div class="form-group row">
-    <label for="adresse-site" class="col-sm-2 col-form-label">Adresse*</label>
+    <label for="adresse-site" class="col-sm-2 col-form-label">Address*</label>
     <div class="col-sm-10">
-      <input type="text" id="adresse-site" placeholder="Adresse" name="adresse">
+      <input type="text" id="adresse-site" placeholder="Address" name="address">
     </div>
   </div>
+  <br/>
   <div class="form-group row">
     <label for="latitude-site" class="col-sm-2 col-form-label">Latitude*</label>
     <div class="col-sm-10">
       <input type="text" id="latitude-site" placeholder="Latitude" name="latitude">
     </div>
   </div>
+  <br/>
   <div class="form-group row">
     <label for="longitude-site" class="col-sm-2 col-form-label">Longitude*</label>
     <div class="col-sm-10">
       <input type="text" id="longitude-site" placeholder="Longitude" name="longitude">
     </div>
   </div>
+  <br/>
   <div class="form-group row">
     <label for="description-site" class="col-sm-2 col-form-label">Description*</label>
       <div class="col-sm-200">
         <input size="60" type="text" id="description-site" placeholder="Description" name="description">
       </div>
   </div>
+  <br/>
+  <!--
   <div class="form-group row">
-    <label for="periode-site" class="col-sm-2 col-form-label">Période*</label>
+    <label for="periode-site" class="col-sm-2 col-form-label">Period*</label>
       <div class="col-sm-200">
-        <input type="text" id="periode-site" placeholder="Fourchette chronologique" name="periode">
+        <input type="text" id="periode-site" placeholder="Period" name="periode">
       </div>
   </div>
-  <!--
+  <br/>
+  
   <div class="form-group row">
     <label for="image-site" class="col-sm-2 col-form-label">Image</label>
       <div class="col-sm-60">
         <input type="image" id="image-site" placeholder="Image" name="image">
       </div>
   </div>
-  -->
+  
   <br/>
+  -->
 
   <!-- Bouton "modifier" -->
   <div>
-    <button type="submit" class="btn btn-primary">Ajoutez le site archéologique</button>
+    <button type="submit" class="btn btn-primary">Send</button>
   </div>
 </form>
 {% endblock %}

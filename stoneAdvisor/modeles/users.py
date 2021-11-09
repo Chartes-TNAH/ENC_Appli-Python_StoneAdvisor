@@ -37,13 +37,13 @@ class User(db.Model, UserMixin):
             db.or_(User.Email == email)
         ).count()
         if email_count > 0:
-            errors.append("this email already exists")
+            errors.append("This email already exists")
 
         username_count = User.query.filter(
             db.or_(User.Login == username)
         ).count()
         if username_count > 0:
-            errors.append("this username already exists")
+            errors.append("This username already exists")
 
         if len(errors) > 0:
             return False, errors
