@@ -11,33 +11,39 @@ class User(db.Model, UserMixin):
     Mdp = db.Column(db.String(64), nullable=False)
 
     @staticmethod
-    def log_in(login, password):
-        user = User.query.filter(User.Login == login).first()
+    def log_in(username, password):
+        user = User.query.filter(User.Login == username).first()
         if user and check_password_hash(user.Mdp, password):
             return user
         return None
 
     @staticmethod
-    def sign_in(login, email, name, password):
+    def sign_in(username, email, name, password):
         errors = []
-        if not login:
-            errors.append("Login missing")
+        if not username:
+            errors.append("username missing")
         if not email:
-            errors.append("Email missing")
+            errors.append("email missing")
         if not name:
-            errors.append("Name missing")
+            errors.append("name missing")
         # the password must exceed 6 digits
         if not password :
-            errors.append("Password missing")
+            errors.append("password missing")
         if len(password) < 6:
-            errors.append("The password must contain at least 6 digits")
+            errors.append("the password must contain at least 6 digits")
 
         # Checking that the account is unique
-        uniques = User.query.filter(
-            db.or_(User.Email == email, User.Login == login)
+        email_count = User.query.filter(
+            db.or_(User.Email == email)
         ).count()
-        if uniques > 0:
-            errors.append("The email or login already exists")
+        if email_count > 0:
+            errors.append("this email already exists")
+
+        username_count = User.query.filter(
+            db.or_(User.Login == username)
+        ).count()
+        if username_count > 0:
+            errors.append("this username already exists")
 
         if len(errors) > 0:
             return False, errors
@@ -45,7 +51,7 @@ class User(db.Model, UserMixin):
         # Adding the user to the database
         user = User(
             Nom=name,
-            Login=login,
+            Login=username,
             Email=email,
             Mdp=generate_password_hash(password)
         )

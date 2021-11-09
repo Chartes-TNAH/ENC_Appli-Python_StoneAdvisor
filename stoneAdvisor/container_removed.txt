@@ -6,10 +6,10 @@
                 <li class="nav-link"><a href="{{ url_for('index') }}">Archaeological Sites</a></li>
                 <li class="nav-link"><a href="{{ url_for('creation') }}">Participate</a></li>
                 {% if not current_user.is_authenticated %}
-                <li class="nav-link"><a href="{{url_for('inscription')}}">Sign in</a></li>
-                <li class="nav-link"><a href="{{url_for('connexion')}}">Log in</a></li>
+                <li class="nav-link"><a href="{{url_for('sign_in')}}">Sign in</a></li>
+                <li class="nav-link"><a href="{{url_for('log_in')}}">Log in</a></li>
                 {% else %}
-                <li class="nav-link"><a href="{{url_for('deconnexion')}}">Log out ({{current_user.Nom}})</a></li>
+                <li class="nav-link"><a href="{{url_for('log_off')}}">Log out ({{current_user.Nom}})</a></li>
                 {% endif %}
             </ul>
             formulaire de recherche intégrant la route "recherche" et sa méthode

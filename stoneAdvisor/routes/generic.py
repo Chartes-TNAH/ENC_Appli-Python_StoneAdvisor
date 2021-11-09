@@ -45,7 +45,7 @@ def sign_in():
     # Registration form
     if request.method == "POST":
         status, data = User.sign_in(
-            login=request.form.get("username", None),
+            username=request.form.get("username", None),
             email=request.form.get("email", None),
             name=request.form.get("name", None),
             password=request.form.get("password", None)
@@ -55,7 +55,7 @@ def sign_in():
             flash("You are now registered and can log in.", "success")
             return redirect("/")
         else:
-            flash(" Your registration failed: " + ",".join(data), "error")
+            flash("Error : " + ", ".join(data), "error")
             return render_template("pages/signin.html")
     else:
         return render_template("pages/signin.html")
@@ -68,7 +68,7 @@ def log_in():
         return redirect("/")
     if request.method == "POST":
         user = User.log_in(
-            login=request.form.get("username", None),
+            username=request.form.get("username", None),
             password=request.form.get("password", None)
         )
         if user:
